@@ -1,0 +1,98 @@
+<!-- (C) 2016 Хаджинова Н.В., каф. ИТАС, БГУИР -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//RU">
+<HTML>
+<HEAD>
+<LINK rel=stylesheet href="Оболочка/css/style.css" type=text/css>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Content-Language" CONTENT="ru">
+<title>Лекция № 24 &quot;Система трехмерной компьютерной графики 3ds Max. Визуализация. Анимация.&quot;</title>
+</head>
+
+<body>
+<div align="center">
+  <h1>Лекция № 24 &quot;<strong>Система трехмерной компьютерной графики 3ds Max</strong>.<strong> </strong>Визуализация. Анимация.&quot; </h1>
+</div>
+<hr>
+<h2>Темы, рассматриваемые в данной лекции: </h2>
+<ol>
+  <li>Визуализация</li>
+  <li>Анимация.<hr>
+  </li>
+</ol>
+<h3 align="left">4.10 Визуализация</h3>
+<p>Визуализация&nbsp;&ndash;  построение растровых изображений на основе созданных трёхмерных изображений.  Визуализация необходима, чтобы видеть результаты применения материалов и  источников света.</p>
+<h4 align="left">4.10.1 Простая  визуализация</h4>
+<p>Простая  визуализация &ndash; визуализация со стандартными параметрами. Чтобы выполнить ее,  нажать <strong>Shift+Q</strong> или <strong>F9</strong>. Создаётся окно с трёхмерным изображением  в соответствие с выбранным видом (<strong>Top,  Front, Left, Perspective</strong>). Пример визуализации показан на рисунке 4.26.<br>
+  В  появившемся окне имеется также кнопка <strong>Save  Image</strong>, позволяющее сохранить изображение в файл в желаемом растровом формате.</p>
+<h4 align="left">4.10.2 Настройка  параметров визуализации</h4>
+<p>Для  этого выбрать команду <strong>Rendering&nbsp;&ndash;  Render</strong>. В появившемся окне перейти на вкладку <strong>Command</strong>. Основные настраиваемые параметры визуализации следующие:</p>
+<ul>
+  <li>вкладка <strong>Common</strong>:</li>
+  <li><strong>Time output</strong>&nbsp;&ndash; выбор диапазона кадров для визуализации. Эта настройка  требуется, если используется анимация. Для изображений без анимации выбрать настройку <strong>Single</strong>;</li>
+  <li><strong>Output size</strong>&nbsp;&ndash; выбор размера изображения;</li>
+  <li><strong>Viewport</strong>&nbsp;&ndash; выбор вида (слева, справа, перспектива и другие);</li>
+  <li><strong>Render output</strong>&nbsp;&ndash; настройка вывода изображения в файл.</li>
+  <li>вкладка <strong>Raytracer</strong>&nbsp;&ndash; дополнительные  параметры для изображений, содержащих прозрачные и отражающие материалы.</li>
+</ul>
+<p>После  настройки всех параметров нажать кнопку <strong>Render</strong>.  Строится трёхмерное растровое изображение.</p>
+<h4 align="left">4.10.3 Изменение  фона визуализации</h4>
+<p>Имеется  возможность выбрать фон для изображения, которое строится при визуализации. Для  этого требуется выбрать команду <strong>Rendering  Environment</strong>. Открывается окно <strong>Environments</strong><strong> </strong><strong>and</strong><strong> </strong><strong>Effects</strong>. Далее имеются две основных возможности:</p>
+<ul>
+  <li>выбрать цвет фона. Для  этого в области <strong>Background</strong> использовать поле <strong>Color</strong>;</li>
+  <li>выбрать в качестве фона  любое растровое изображение. Для этого в области <strong>Background</strong> щёлкнуть по кнопке <strong>Environment  Map</strong>. Затем в появившемся окне выбрать <strong>Bitmap</strong>,  затем &ndash; выбрать желаемое растровое изображение. После этого закрыть окно <strong>Environments</strong><strong> </strong><strong>and</strong><strong> </strong><strong>Effects</strong>.</li>
+</ul>
+<p>После  настройки фона требуется выполнить визуализацию нажатием <strong>Shift+Q</strong> или <strong>F9</strong>.<br>
+  На  рисунке 4.27 показан пример визуализации изображения с примитивом <strong>Capsule</strong> (чтобы построить его, в  командной панели выбрать вкладку <strong>Create</strong> &ndash; <strong>Geometry</strong>, выбрать набор примитивов <strong>Extended</strong><strong> </strong><strong>Primitives</strong> и воспользоваться кнопкой <strong>Capsule</strong>). В качестве фона выбрано растровое изображение (фотография холмистой  местности).</p>
+<p align="center"><img src="lk24_clip_image002.jpg" alt="" width="543" height="382"><br>
+  <strong>Рисунок 4.27 &ndash;</strong><strong> Визуализация с фоном из растрового изображения</strong></p>
+<h3 align="left">4.11&nbsp;&nbsp;&nbsp; Анимация</h3>
+<p>В 3ds  Max имеются два основных вида анимации:</p>
+<ul>
+  <li>ключевая анимация;</li>
+  <li>анимация на основе движения  объекта по заданному контуру.</li>
+</ul>
+<h4 align="left">4.11.1 Ключевая  анимация</h4>
+<p>Принцип  работы ключевой анимации следующий: пользователь задаёт параметры движущегося  (анимируемого) объекта (положение, поворот, размер и т.д.) только в некоторых  ключевых кадрах анимации. Для промежуточных кадров эти параметры определяются автоматически.<br>
+  Элементы  управления анимацией располагаются в нижней части экрана (см. рисунок 4.28).</p>
+<p><img src="lk24_clip_image004.jpg" alt="" width="604" height="52"><br>
+  <strong>Рисунок 4.28 &ndash;</strong><strong> Элементы управления анимацией</strong><br>
+  </p>
+<p>Имеются  два основных режима ключевой анимации:</p>
+<ul>
+  <li>автоматический (<strong>Auto Key</strong>);</li>
+  <li>принудительный (<strong>Set Key</strong>).</li>
+</ul>
+<p><strong>Пример</strong> (ключевая анимация в автоматическом режиме)  &ndash; Получить изображение летающего волана для игры в бадминтон.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; В окне <strong>Front</strong> построить примитив <strong>Cone</strong>. Он будет представлять собой изображение  волана. Поместить его в исходную (левую или правую) точку его траектории.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Нажать  кнопку <strong>Auto Key</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Установить  таймер на 25-й кадр. Переместить волан в верхнюю точку его траектории.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Установить  таймер на 48-й кадр. Разместить волан в крайней точке его траектории.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Установить  таймер на 52-й кадр. Перевернуть волан.<br>
+  <strong>6</strong>&nbsp;&nbsp;&nbsp; Установить  таймер на 75-й кадр. Переместить волан в верхнюю точку.<br>
+  <strong>7</strong>&nbsp;&nbsp;&nbsp; Установить  таймер на 100-й кадр. Переместить волан в исходную точку.<br>
+  <strong>8</strong>&nbsp;&nbsp;&nbsp; Выключить  кнопку <strong>Auto Key</strong>.<br>
+  <strong>9</strong>&nbsp;&nbsp;&nbsp; Чтобы  просмотреть анимацию, нажать кнопку <strong>Play  Animation</strong>.<br>
+  <strong>10</strong>&nbsp; Для  остановки проигрывания анимации нажать <strong>Stop  Animation</strong>.<br>
+  В ходе  настройки ключевой анимации в панели управления анимацией (см. рисунок 4.28) отображаются  ключи, т.е. отметки изменения параметров:</p>
+<ul>
+  <li>красная отметка &ndash; изменение  положения;</li>
+  <li>зелёная&nbsp;&ndash; поворот;</li>
+  <li>синяя&nbsp;&ndash; изменение размеров.</li>
+</ul>
+<p>Эти ключи  можно перемещать, удалять, редактировать.<br>
+  Для  настройки анимации в <strong>принудительном  режиме</strong> нажать кнопку <strong>Set Key</strong>. Затем  поочерёдно устанавливать объект в желаемые позиции аналогично тому, как это  делается в автоматическом режиме, и в каждой из этих позиций устанавливать  ключи с помощью кнопки <strong>Set Keys</strong> (кнопка  с изображением ключа). Для выбора типа ключа используется кнопка <strong>Key Filters</strong>.<br>
+  Для  точной настройки траектории анимации используется окно <strong>Curve Editor</strong>, вызываемое командой <strong>Graph Editor&nbsp;&ndash; Track View&nbsp;&ndash; Curve Editor</strong>. Траекторию анимации  можно редактировать как обычную кривую.</p>
+<h4 align="left">4.11.2 Анимация  на основе движения по заданному контуру</h4>
+<p><strong>Пример</strong> &ndash; Получить изображение шара, катающегося по  окружности.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Создать  шар и окружность, как обычные примитивы.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Выделить  шар. В командной панели перейти на вкладку <strong>Hierarchy</strong>.  Нажать кнопку <strong>Affect&nbsp;Pivot&nbsp;Only</strong> и поместить появившийся указатель на край шара. Выбранная точка шара будет  использоваться в качестве опорной точки при его движении. Выключить кнопку <strong>Affect Pivot Only</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Указать,  что шар будет двигаться по заданному пути. Для этого выделить шар и перейти в  командной панели на вкладку <strong>Motion</strong>.  На ней открыть вкладку <strong>Assign Controller</strong>.  В ней выбрать поле <strong>Position</strong>. Нажать  кнопку <strong>Assign Controller</strong>. В  появившемся окне (см. рисунок 4.29) выбрать <strong>Path Constraint</strong> и нажать кнопку <strong>OK</strong>.</p>
+<p><br>
+  <img src="lk24_clip_image006.jpg" alt="" width="273" height="401"><br>
+  <strong>Рисунок 4.29 &ndash;</strong><strong> Выбор режима движения по заданному контуру</strong><br>
+</p>
+<p><strong>4</strong>&nbsp;&nbsp;&nbsp; Указать путь  для движения. Для этого в области <strong>Path  Parameters</strong> нажать кнопку <strong>Add Path</strong>.  Щёлкнуть указателем мыши по окружности. Шар перемещается на неё.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Запустить  анимацию нажатием кнопки <strong>Play animation</strong>.</p>
+<p><a href="../../presentations/21-24 лекция 3D'sMAX.ppt" target="_new">Презентация к лекциям 21-24</a></p>
+</body>
+</html>

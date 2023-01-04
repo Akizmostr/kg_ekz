@@ -1,0 +1,458 @@
+<!-- (C) 2016 Хаджинова Н.В., каф. ИТАС, БГУИР -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//RU">
+<HTML>
+<HEAD>
+<LINK rel=stylesheet href="Оболочка/css/style.css" type=text/css>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Content-Language" CONTENT="ru">
+<title>Лекция № 4 &quot;Графическая библиотека OpenGL. Буферы. Примитивы. Матрицы.&quot;</title>
+</head>
+
+<body>
+<div align="center">
+  <h1>Лекция № 4 &quot;<strong>Графическая библиотека OpenGL. Буферы. Примитивы. Матрицы.</strong>&quot; </h1>
+</div>
+<hr>
+<h2>Темы, рассматриваемые в данной лекции: </h2>
+<ol>
+  <li>Синтаксис OpenGL. Функции OpenGL.</li>
+  <li>Буферы OpenGL.</li>
+  <li>Создание графических примитивов. Построение       изображений простых объектов и поверхностей.</li>
+  <li>Матрицы OpenGL. Преобразования в пространстве.       Управление координатами.<hr>
+  </li>
+</ol>
+<h1><a name="_Toc307897362">1&nbsp;СТАНДАРТНЫЕ ПРИМИТИВЫ</a></h1>
+<h2><a name="_Toc307897363">1.1 Стандартные  примитивы </a>OpenGL </h2>
+<p>&nbsp;</p>
+<p>Каждый примитив  представляет собой набор вершин. Однако для указания примитивам каких либо  значений атрибутов эти вершины надо объединить в одно целое, определив  необходимые свойства. Для этого в OpenGL используются так называемые  операторные скобки, являющиеся вызовами специальных команд OpenGL Определение  примитива или последовательности примитивов происходит между вызовами команд</p>
+<p>void <strong>glBegin</strong> (GLenum <em>mode</em>);<br>
+  void <strong>glEnd</strong> (void); </p>
+<p>Возможные значения параметра <em>mode</em> приведены в таблице</p>
+<p>Таблица  &ndash; Примитивы OpenGL</p>
+<div align="center">
+  <table border="1" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="175" valign="top"><br>
+        <strong>Название примитива</strong></td>
+      <td width="364" valign="top"><p align="center"><strong>Описание</strong></p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_POINTS </p></td>
+      <td width="364" valign="top"><p>Набор    вершин</p></td>
+    </tr>
+    <tr>
+      <td width="540" colspan="2"><p align="center">Линии</p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_LINES </p></td>
+      <td width="364" valign="top"><p>Строит    отрезок прямой по двум вершинам</p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_LINE_STRIP </p></td>
+      <td width="364" valign="top"><p>Строит    ломаную линию через указанные в операторных скобках вершины</p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL LINE_LOOP </p></td>
+      <td width="364" valign="top"><p>Строит    замкнутую ломаную линию через указанные в операторных скобках вершины</p></td>
+    </tr>
+    <tr>
+      <td width="540" colspan="2"><p align="center">Многоугольники</p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_POLYGON </p></td>
+      <td width="364" valign="top"><p>Строит    многоугольник</p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_QUADS</p></td>
+      <td width="364" valign="top"><p>Строит    четырехугольник </p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_TRIANGLES</p></td>
+      <td width="364" valign="top"><p>Строит    треугольник </p></td>
+    </tr>
+    <tr>
+      <td width="540" colspan="2"><p align="center">Полосы</p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_QUAD_STRIP</p></td>
+      <td width="364" valign="top"><p>Строит    полосу, состоящую из четырехугольников</p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_TRIANGLE_STRIP</p></td>
+      <td width="364" rowspan="2"><p>Строит    полосу, состоящую из треугольников</p></td>
+    </tr>
+    <tr>
+      <td width="175"><p>GL_TRIANGLE_FAN</p></td>
+    </tr>
+  </table>
+</div>
+<h3><a name="_Toc307897364">1.1.1</a>&nbsp;Вершины </h3>
+<p>&nbsp;</p>
+<p>Чтобы задать координаты единственной вершины,  используется следующая функция OpenGL.</p>
+<p><strong>glVertex</strong>*( ); </p>
+<p>Здесь звездочка означает, что для данной  функции необходимы индексные коды. Эти индексные коды обозначают размерность  пространства, тип числовых данных, которые используются в качестве значений  координат, и возможность представления координат в виде вектора. Функция glVertex должна находиться в программе между функциями glBegin и glEnd. Таким образом, положение точки в OpenGL описывается так.</p>
+<p>glBegin (GL_POINTS);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex* ( ) ; <br>
+  glEnd ( ); </p>
+<p>И хотя термином <em>vertex</em> (вершина) в строгом  смысле называют &ldquo;угловую&rdquo; точку многоугольника, точку пересечения сторон угла,  точку пересечения эллипса с его главной осью или другие подобные точки  геометрических фигур, функция glVertex в OpenGL описывает положение  любой точки. Таким образом, для задания вершин, прямых линий и многоугольников  применяется одна функция, а для описания объек&shy;тов, составляющих сцену, чаще  всего используются прямоугольные участки. <br>
+  Координаты точек в OpenGL могут задаваться в двух,  трех или четырех измерениях. Для того чтобы задать размерность пространства, в  функции glVertex используются индексы 2,  3 или 4. Четырехмерное описание указывает на представ&shy;ление с помощью <em>однородных  координат,</em> где <em>однородный параметр </em><em>h</em> (четвертая координата) &ndash;  это масштабный коэффициент для значений декартовых координат. Поскольку в OpenGL двухмерное пространство  считается частным случаем трехмерного, любые координаты (<em>х</em>, <em>у)</em> эквивалентны (х, <em>у,</em> 0) при <em>h</em> = 1. <br>
+  Далее нужно обозначить, какой тип данных  используется для описания числовых значений координат. Это осуществляется с  помощью второго индексного кода функ&shy;ции glVertex. Тип числовых данных обозначают следующие индексы: i (integer), s  (short), f (fbat)  и d (double). Наконец, значения координат в функции glVertex могут перечисляться в явном виде, или  может использоваться единственный аргумент, который задает положения координат  в виде массива. Если применяется описание координат в виде массива, необходимо  прибавить третий индекс: v (vector). <br>
+  Ниже приведен пример вывода на экран трех точек,  находящихся на одинаковом расстоянии друг от друга. Координаты задаются в виде  пар целых чисел.</p>
+<p>glBegin(GL_POINTS); <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex2i (50, 100); <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex2i (75, 150); <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex2i (100, 200); <br>
+  glEnd( ); </p>
+<p>Как показано ниже, значения координат для  вышеприведенных точек можно задать в виде массивов </p>
+<p>int pointl[ ]&nbsp;=&nbsp;{50,  100}; <br>
+  int point2[  ]&nbsp;=&nbsp;{75, 150}; <br>
+  int point3[  ]&nbsp;=&nbsp;{100, 200}; </p>
+<p>и вызвать функции OpenGL для построения трех  точек.</p>
+<p>glBegin  (GL_POINTS); <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex2iv  (pointl); <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex2iv  (point2); <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex2iv  (point3); <br>
+  glEnd ( ); </p>
+<p>А вот пример описания положений двух точек  в трехмерной системе координат. В этом случае координаты задаются в явном виде  как значения с плавающей запятой.</p>
+<p>glBegin  (GL_POINTS); <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex3f  (-78.05, 909.72, 14.60); <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;glVertex3f  (261.91, -5200.67, 188.33); <br>
+  glEnd ( ); </p>
+<p><strong>Цвет вершины</strong><br>
+  Для задания текущего  цвета вершины используются команды :</p>
+<table border="0" cellpadding="0" width="67%">
+  <tr>
+    <td width="99%"><p>void <strong>glColor[3    4][b s i f]</strong> (GLtype <em>components</em>)<br>
+      void <strong>glColor[3    4][b s i f]v</strong> (GLtype <em>components</em>) </p></td>
+  </tr>
+</table>
+<p>Первые три параметра  задают R, G, B компоненты цвета, а последний параметр определяет коэффициент  непрозрачности (так называемая альфа-компонента). Если в названии команды  указан тип &laquo;f&raquo; (float), то значения всех параметров должны принадлежать отрезку  [0,1], при этом по умолчанию значение альфа-компоненты устанавливается равным  1.0, что соответствует полной непрозрачности. Тип &laquo;ub&raquo; (unsigned byte)  подразумевает, что значения должны лежать в отрезке [0,255].<br>
+  Вершинам можно назначать  различные цвета, и, если включен соответствующий режим, то будет проводиться  линейная интерполяция цветов по поверхности примитива.<br>
+  Для управления режимом  интерполяции используется команда</p>
+<table border="0" cellpadding="0" width="52%">
+  <tr>
+    <td width="98%"><p>void <strong>glShadeModel</strong> (GLenum&nbsp; <em>mode</em>)</p></td>
+  </tr>
+</table>
+<p>вызов которой с  параметром <strong>GL_SMOOTH </strong>включает интерполяцию (установка по умолчанию), а с <strong>GL_FLAT </strong>&ndash;  отключает. </p>
+<h4>Нормаль</h4>
+<p>Аналогичным образом можно определить нормаль в  вершине, используя команды </p>
+<table border="0" cellpadding="0" width="55%">
+  <tr>
+    <td width="98%"><pre>void <strong>glNormal3[b s i f d]</strong>(type coords)</pre>
+      <pre>void <strong>glNormal3[b s i f d]v</strong>(type coords)</pre></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>Задаваемый вектор может не иметь единичной длины, но  он будет нормироваться автоматически в режиме нормализации, который включается  вызовом команды <em>glEnable(</em>GL_NORMALIZE<em>)</em>. Команды </p>
+<table border="0" cellpadding="0" width="49%">
+  <tr>
+    <td width="98%"><pre>void <strong>glEnable</strong>(GLenum mode)</pre>
+      <pre>void <strong>glDisable</strong>(GLenum mode)</pre></td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+<p>производят включение и отключение того или иного  режима работы конвейера OpenGL. </p>
+<h3><a name="_Toc307897365">1.1.2</a>&nbsp;Линии </h3>
+<p>&nbsp;</p>
+<p>Тип GL_LINES задает формирование отрезка по двум  вершинам, которые рассматриваются как его начальная и конечная точки.  Необходимо обратить внимание на то, что построенные таким обра&shy;зом отрезки, как  правило, не стыкуются друг с другом в крайних точках. <br>
+  Если необходимо сформировать <em>ломаную  линию </em><em>(</em><em>polyline</em><em>)</em> &ndash; последовательность стыкующихся отрезков, &ndash; то используется тип GL_LINE_STRIP. Чаше всего ломаные линии использу&shy;ются для  аппроксимации кривых. Если желательно получить замкнутый контур, то можно либо  указать в качестве конечной и начальной в списке одну и ту же вершину, либо  использовать специальный тип, определяющий именно замкнутую ломаную, &ndash; GL LINE_LOOP. В этом случае OpenGL самостоятельно свяжет отрезком последнюю вершину в списке с первой. </p>
+<p align="center"><img width="360" height="115" src="lk4_clip_image002.jpg"><br>
+  Рисунок  &ndash; построение линий при помощи <br>
+  стандартных примитивов OpenGL </p>
+<h3><a name="_Toc307897366">1.1.3&nbsp;Многоугольники</a></h3>
+<p>&nbsp;</p>
+<p>Отрезки и ломаные можно использовать для  моделирования ребер более сложных объектов, но примитив типа <em>замкнутая ломаная</em> не имеет одного  важного свойства &ndash; внутренней области. Подобным свойством в OpenGL обладают примитивы  другого типа &ndash; <em>многоугольники </em>(<em>polygon</em>) (рисунок 3). Хотя по форме замкнутая  ломаная ничем не отличается от многоугольника с совпадающими вершинами, она не  имеет внутренней области. С помощью многоугольников аппроксимируют  криволинейные поверхности. </p>
+<p align="center"><img width="186" height="116" src="lk4_clip_image004.gif"><br>
+  Рисунок  &ndash; примеры <br>
+  многоугольников</p>
+<p><strong>Многоугольники </strong><strong>(</strong><strong>GL</strong><strong>_</strong><strong>POLYGON</strong><strong>)</strong><strong> </strong><br>
+  Ребра объектов этого типа совпадают с  отрезками замкнутой ломаной, построенной на том же наборе вершин. Внутренняя  область объекта заполняется в соответствии с заданными значениями атрибутов  заливки. </p>
+<p><strong>Треугольники и четырехугольники (</strong><strong>GL</strong><strong> </strong><strong>TRIANGLES</strong><strong>, </strong><strong>GL</strong><strong> </strong><strong>QUADS</strong><strong>)</strong><strong> </strong><br>
+  Для формирования треугольников и  четырехугольников в OpenGL используются специ&shy;альные примитивы. Треугольник определяется тремя вершинами,  а четырехугольник &ndash; четырьмя. Эти объекты тонируются быстрее, чем такие же по  форме объекты типа GL_POLYGON. </p>
+<p align="center"><img width="359" height="116" src="lk4_clip_image006.jpg"><br>
+  Рисунок  &ndash; построение многоугольников при помощи <br>
+  Стандартных примитивов OpenGL </p>
+<h3><a name="_Toc307897367">1.1.4</a>&nbsp;Полосы </h3>
+<p>&nbsp;</p>
+<p>Объекты данных типов представляют собой  группу треугольников или четырехугольни&shy;ков, в которых отдельные фигуры  совместно используют некоторые вершины. В треуголь&shy;ной полосе &ndash; объекте типа GL TRIANGLE_STRIP &ndash; каждая последующая вершина в списке  комбинируется с двумя предыдущими и определяет таким образом очередную  треугольную ячейку полосы. В полосе, состоящей из четырехугольных ячеек &ndash;  объекте типа GL_QUAD_STRIP, &ndash; каждая  очередная пара вершин в списке комбинируется с предыдущей па&shy;рой и задает  очередную четырехугольную ячейку. Объект типа GL_TRIANGLE_FAN &ndash; <em>розетка</em> &ndash; строится на основе одной фиксированной вершины (центра), которая идет первой  в списке вершин. Следующие две вершины в списке определяют первый треугольный &laquo;лепесток&raquo;,  а затем каждая очередная вершина вместе с предыдущей в списке и центральной  определяет следующий &laquo;лепесток&raquo;. <br>
+  Примеры различных типов полос приведены на рисунке.</p>
+<p align="center"><img width="507" height="91" src="lk4_clip_image008.jpg"></p>
+<p align="center">Рисунок  &ndash; построение полос при помощи стандартных<br>
+  примитивов OpenGL </p>
+<p>Кроме рассмотренных  стандартных примитивов в библиотеках GLU и GLUT описаны более сложные фигуры,  такие как сфера, цилиндр, диск (в GLU) и сфера, куб, конус, тор, тетраэдр,  додекаэдр, икосаэдр, октаэдр и чайник (в GLUT). </p>
+<h3><a name="_Toc307897368">1.1.5&nbsp;Параметры  отображения многоугольников на экране</a></h3>
+<p>&nbsp;</p>
+<p>Кроме задания самих  многоугольников, можно определить метод их отображения на экране.<br>
+  Однако сначала надо  определить понятие лицевых и обратных граней.<br>
+  Под&nbsp;<em>гранью</em>&nbsp;понимается  одна из сторон многоугольника, и по умолчанию лицевой считается та сторона,  вершины которой обходятся против часовой стрелки. Направление обхода вершин  лицевых граней можно изменить вызовом команды</p>
+<table border="0" cellpadding="0" width="48%">
+  <tr>
+    <td width="98%"><p>void <strong>glFrontFace</strong> (GLenum <em>mode</em>)</p></td>
+  </tr>
+</table>
+<p>со значением параметра&nbsp;<em>mode</em>&nbsp;равным&nbsp;<strong>GL_CW&nbsp;</strong>(clockwise),  а вернуть значение по умолчанию можно, указав&nbsp;<strong>GL_CCW&nbsp;</strong>(counter-clockwise).<br>
+  Чтобы изменить метод  отображения многоугольника используется команда</p>
+<table border="0" cellpadding="0" width="58%">
+  <tr>
+    <td width="98%"><p>void <strong>glPolygonMode</strong> (GLenum <em>face</em>, Glenum <em>mode</em>)</p></td>
+  </tr>
+</table>
+<p>Параметр&nbsp;<em>mode</em>&nbsp;определяет,  как будут отображаться многоугольники, а параметр&nbsp;<em>face</em>&nbsp;устанавливает  тип многоугольников, к которым будет применяться эта команда и может принимать  следующие значения, приведенные в таблице.</p>
+<p>Таблица  &ndash; методы  отображения многоугольников</p>
+<table border="1" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="217" valign="top"><br>
+      <strong>GL_FRONT</strong></td>
+    <td width="182" valign="top"><p>для    лицевых граней </p></td>
+  </tr>
+  <tr>
+    <td width="217"><p><strong>GL_BACK</strong></p></td>
+    <td width="182"><p>для    обратных граней</p></td>
+  </tr>
+  <tr>
+    <td width="217"><p><strong>GL_FRONT_AND_BACK</strong></p></td>
+    <td width="182"><p>для всех    граней</p></td>
+  </tr>
+</table>
+<p>Параметр&nbsp;<em>mode</em>&nbsp;может  быть равен одному из значений, приведенных в таблице</p>
+<p>&nbsp;</p>
+<p>Таблица  &ndash; параметры  отображения многоугольников</p>
+<div align="center">
+  <table border="1" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="102" valign="top"><br>
+        <strong>GL_POINT</strong></td>
+      <td width="435" valign="top"><p>при таком    режиме будут отображаться только вершины многоугольников. </p></td>
+    </tr>
+    <tr>
+      <td width="102" valign="top"><p><strong>GL_LINE</strong></p></td>
+      <td width="435" valign="top"><p>при таком    режиме многоугольник будет представляться набором отрезков. </p></td>
+    </tr>
+    <tr>
+      <td width="102" valign="top"><p><strong>GL_FILL</strong></p></td>
+      <td width="435" valign="top"><p>при таком    режиме многоугольники будут закрашиваться текущим цветом с учетом освещения,    и этот режим установлен по умолчанию. </p></td>
+    </tr>
+  </table>
+</div>
+<p>Также можно указывать,  какой тип граней отображать на экране. Для этого сначала надо установить  соответствующий режим вызовом команды&nbsp;<strong>glEnable</strong>&nbsp;(GL_CULL_FACE), а затем выбрать тип отображаемых  граней с помощью команды</p>
+<table border="0" cellpadding="0" width="46%">
+  <tr>
+    <td width="98%"><p>void <strong>glCullFace</strong> (GLenum <em>mode</em>)</p></td>
+  </tr>
+</table>
+<p>Вызов с параметром&nbsp;<strong>GL_FRONT</strong>&nbsp;приводит  к удалению из изображения всех лицевых граней, а с параметром&nbsp;<strong>GL_BACK</strong>&nbsp;&ndash;  обратных (установка по умолчанию).</p>
+<h2><a name="_Toc307897369">1.2</a>&nbsp;Стандартные примитивы библиотек Glu и Glut </h2>
+<p>&nbsp;</p>
+<p>Чтобы построить примитив  из библиотеки GLU, надо сначала создать указатель на <em>quadric</em>-объект с помощью команды</p>
+<p>GLUquadricObj* <strong>gluNewQuadric</strong>(void), </p>
+<p>а затем вызвать одну из  команд <em>gluSphere()</em>, <em>gluCylinder()</em>, <em>gluDisk()</em>, <em>gluPartialDisk()</em>.  Рассмотрим эти команды подробнее.</p>
+<table border="0" cellpadding="0" width="70%">
+  <tr>
+    <td width="99%"><p>void <strong>gluSphere</strong> (GLUquadricObj&nbsp; *<em>qobj</em>, GLdouble<em> radius</em>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLint<em> slices</em>, GLint<em> stacks</em>)</p></td>
+  </tr>
+</table>
+<p>Эта функция строит сферу  с центром в начале координат и радиусом&nbsp;<em>radius</em>. При этом число разбиений сферы вокруг оси z  задается параметром&nbsp;<em>slices</em>, а вдоль оси z &ndash;  параметром <em>stacks</em>.</p>
+<table border="0" cellpadding="0" width="69%">
+  <tr>
+    <td width="99%"><p>void <strong>gluCylinder</strong> (GLUquadricObj&nbsp; *<em>qobj</em><strong>,</strong><br>
+      <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong>GLdouble<em> baseRadius</em><strong>,</strong><br>
+      <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong>GLdouble <em>topRadius</em><strong>, </strong><br>
+      <strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </strong>GLdouble<em> height</em><strong>, </strong>GLint<em> slices</em><strong>, </strong><br>
+      <strong>&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>GLint<em> stacks</em>) </p></td>
+  </tr>
+</table>
+<p>Данная функция строит  цилиндр без оснований (то есть кольцо), продольная ось параллельна оси <em>z</em>, заднее основание имеет радиус&nbsp;<em>baseRadius</em>,  и расположено в плоскости <em>z</em>=0,  переднее основание имеет радиус&nbsp;<em>topRadius</em>&nbsp;и расположено в плоскости z&nbsp;=&nbsp;<em>height</em>. Если  задать один из радиусов равным нулю, то будет построен конус.<br>
+  Параметры&nbsp;<em>slices</em>&nbsp;и<em>&nbsp;stacks</em>&nbsp;имеют  аналогичный смысл, что и в предыдущей команде.</p>
+<table border="0" cellpadding="0" width="66%">
+  <tr>
+    <td width="99%"><p>void <strong>gluDisk </strong>(GLUquadricObj&nbsp; *<em>qobj</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>innerRadius</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;GLdouble <em>outerRadius</em>, GLint <em>slices</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLint <em>loops</em>) </p></td>
+  </tr>
+</table>
+<p>Функция строит плоский  диск (то есть круг) с центром в начале координат и радиусом&nbsp;<em>outerRadius</em>.  При этом если значение&nbsp;<em>innerRadius</em>&nbsp;отлично от нуля, то в центре диска будет находиться  отверстие радиусом&nbsp;<em>innerRadius</em>. Параметр&nbsp;<em>slices</em>&nbsp;задает число  разбиений диска вокруг оси <em>z</em>, а  параметр&nbsp;<em>loops</em>&nbsp;&ndash;число концентрических колец, перпендикулярных оси <em>z</em>.</p>
+<table border="0" cellpadding="0" width="82%">
+  <tr>
+    <td width="99%"><p>void <strong>gluPartialDisk </strong>(GLUquadricObj *<em>qobj</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>innerRadius</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLdouble <em>outerRadius</em>, GLint <em>slices</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLint <em>loops</em>,    GLdouble <em>startAngle</em>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>sweepAngle</em>); </p></td>
+  </tr>
+</table>
+<p>Отличие этой команды от  предыдущей заключается в том, что она строит сектор круга, начальный и конечный  углы которого отсчитываются против часовой стрелки от положительного  направления оси y и задаются параметрами&nbsp;<em>startAngle</em>&nbsp;и&nbsp;<em>sweepAngle</em>. Углы измеряются в градусах.</p>
+<p>void&nbsp;<strong>glutSolidSphere</strong>(GLdouble radius, GLint slices, GLint stacks)<br>
+  void&nbsp;<strong>glutWireSphere</strong>(GLdouble  radius, GLint slices, GLint stacks)</p>
+<p>Команда <em>glutSolidSphere()</em> строит сферу, а <em>glutWireSphere()</em> &ndash; каркас сферы радиусом <em>radius</em>. При этом число разбиений  сферы вокруг оси <em>z</em> задается  параметром <em>slices</em>, а вдоль оси <em>y</em> параметром <em>stacks</em>.</p>
+<p>void&nbsp;<strong>glutSolidCube</strong>(GLdouble  size)<br>
+  void&nbsp;<strong>glutWireCube</strong>(GLdouble  size)</p>
+<p>Эти команды строят куб или каркас  куба с центром в начале координат и длиной ребра <em>size</em>.</p>
+<p>void&nbsp;<strong>glutSolidCone</strong>(GLdouble  base, GLdouble height, GLint slices, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLint  stacks)<br>
+  void&nbsp;<strong>glutWireCone</strong>(GLdouble  base, GLdouble height, GLint slices, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLint  stacks)</p>
+<p>Эти команды строят конус или его  каркас высотой <em>height</em> и радиусом  основания <em>base</em>, расположенный вдоль  оси <em>z</em>. Основание находится в  плоскости <em>z</em>=0. Остальные параметры  имеют тот же смысл, что и в предыдущих командах.</p>
+<p>void&nbsp;<strong>glutSolidTorus</strong>(GLdouble  innerRadius, GLdouble outerRadius, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLint  nsides, GLint rings)<br>
+  void&nbsp;<strong>glutWireTorus</strong>(GLdouble  innerRadius, GLdouble outerRadius, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLint  nsides, GLint rings)</p>
+<p>Эти команды строят тор или его каркас  в плоскости <em>z=0</em>. Внутренний и внешний  радиусы задаются параметрами <em>innerRadius</em>, <em>outerRadius</em>. Параметр <em>nsides</em> задает число сторон в кольцах,  составляющих ортогональное сечение тора, а <em>rings</em> &ndash; число радиальных разбиений тора.</p>
+<p>void&nbsp;<strong>glutSolidTetrahedron</strong>(void)<br>
+  void&nbsp;<strong>glutWireTetrahedron</strong>&nbsp;(void)</p>
+<p>Эти команды строят тетраэдр  (правильную треугольную пирамиду) или его каркас, при этом радиус описанной  сферы вокруг него равен 1.</p>
+<p>void&nbsp;<strong>glutSolidOctahedron</strong>(void)<br>
+  void&nbsp;<strong>glutWireOctahedron</strong>(void)</p>
+<p>Эти команды строят октаэдр или его  каркас, радиус описанной вокруг него сферы равен 1.</p>
+<p>void&nbsp;<strong>glutSolidDodecahedron</strong>(void)<br>
+  void&nbsp;<strong>glutWireDodecahedron</strong>(void)</p>
+<p>Эти команды строят додекаэдр или его каркас, радиус описанной вокруг него  сферы равен квадратному корню из трех.</p>
+<p>void&nbsp;<strong>glutSolidIcosahedron</strong>(void)<br>
+  void&nbsp;<strong>glutWireIcosahedron</strong>(void)</p>
+<p>Эти команды строят икосаэдр или его  каркас, радиус описанной вокруг него сферы равен 1.</p>
+<p>void&nbsp;<strong>glutSolidTeapot</strong>(GLdouble size)<br>
+  void&nbsp;<strong>glutWireTeapot</strong> (GLdouble size)</p>
+<p>Эти команды строят чайник или его  каркас.</p>
+<strong><br clear="all">
+</strong>
+<h1><a name="_Toc307897370">2.&nbsp;ПРЕОБРАЗОВАНИЯ ОБЪЕКТОВ</a></h1>
+<p>&nbsp;</p>
+<p>В OpenGL используются как основные три  системы координат: левосторонняя, правосторонняя и оконная. Первые две системы  являются трехмерными и отличаются друг от друга направлением оси <em>z</em>: в правосторонней она направлена на  наблюдателя, в левосторонней &ndash; в глубину экрана. Ось <em>x</em> направлена вправо относительно наблюдателя, ось <em>y</em> &ndash; вверх.<br>
+  Левосторонняя система используется для  задания значений параметрам команды <em>gluPerspective()</em>, <em>glOrtho()</em>. Правосторонняя система  координат используется во всех остальных случаях. Отображение трехмерной  информации происходит в двумерную оконную систему координат. </p>
+<p align="center"><img width="424" height="136" src="lk4_clip_image009.gif"><br>
+  Рисунок  &ndash; Системы координат OpenGL</p>
+<p>Строго говоря, OpenGL позволяет путем  манипуляций с матрицами моделировать как правую, так и левую систему координат.  Основной системой координат OpenGL является правосторонняя система.</p>
+<h2><a name="_Toc307897371">2.1&nbsp;Работа с матрицами</a><a name="EPLAE"></a></h2>
+<p>&nbsp;</p>
+<p>Для задания различных  преобразований объектов сцены в OpenGL используются операции над матрицами, при  этом различают три типа матриц: модельно-видовая, матрица проекций и матрица  текстуры. Все они имеют размер 4x4. Видовая матрица определяет преобразования  объекта в мировых координатах, такие как параллельный перенос, изменение  масштаба и поворот. Матрица проекций определяет, как будут проецироваться  трехмерные объекты на плоскость экрана (в оконные координаты), а матрица текстуры  определяет наложение текстуры на объект.<br>
+  Умножение координат на  матрицы происходит в момент вызова соответствующей команды OpenGL, определяющей  координату (как правило, это команда <em>glVertex*</em>)<br>
+  Для того чтобы выбрать,  какую матрицу надо изменить, используется команда:</p>
+<table border="0" cellpadding="0" width="98%">
+  <tr>
+    <td><p>void <strong>glMatrixMode</strong> (GLenum <em>mode</em>)</p></td>
+  </tr>
+</table>
+<p>вызов которой со  значением параметра <em>mode</em> равным GL_MODELVIEW, GL_PROJECTION,  или GL_TEXTURE&nbsp;включает режим работы с модельно-видовой матрицей,  матрицей проекций, или матрицей текстуры соответственно. Для вызова команд,  задающих матрицы того или иного типа, необходимо сначала установить  соответствующий режим.<br>
+  Для определения элементов  матрицы текущего типа вызывается команда</p>
+<table border="0" cellpadding="0" width="44%">
+  <tr>
+    <td width="98%"><p>void <strong>glLoadMatrix[f    d]</strong> (GLtype *<em>m</em>)</p></td>
+  </tr>
+</table>
+<p>где&nbsp;<em>m</em>&nbsp;указывает  на массив из 16 элементов типа float или double в соответствии с названием  команды, при этом сначала в нем должен быть записан первый столбец матрицы,  затем второй, третий и четвертый. Еще раз обратим внимание: в массиве&nbsp;<em>m&nbsp;</em>матрица  записана&nbsp;<em>по столбцам</em>.<br>
+  Команда</p>
+<table border="0" cellpadding="0" width="35%">
+  <tr>
+    <td width="98%"><p>void <strong>glLoadIdentity</strong> (void)</p></td>
+  </tr>
+</table>
+<p>заменяет текущую матрицу  на единичную.<br>
+  Часто бывает необходимо  сохранить содержимое текущей матрицы для дальнейшего использования, для чего  применяются команды</p>
+<table border="0" cellpadding="0" width="34%">
+  <tr>
+    <td width="98%"><p>void <strong>glPushMatrix</strong> (void)<br>
+      void <strong>glPopMatrix</strong> (void) </p></td>
+  </tr>
+</table>
+<p>Они записывают и  восстанавливают текущую матрицу из стека, причем для каждого типа матриц стек  свой. Для модельно-видовых матриц его глубина равна как минимум 32, для  остальных &ndash; как минимум 2.<br>
+  Для умножения текущей  матрицы на другую матрицу используется команда</p>
+<table border="0" cellpadding="0" width="98%">
+  <tr>
+    <td><p>void <strong>glMultMatrix[f    d]</strong> (GLtype *<em>m</em>)</p></td>
+  </tr>
+</table>
+<p>где параметр&nbsp;<em>m</em>&nbsp;должен  задавать матрицу размером 4x4. Если обозначить текущую матрицу за М,  передаваемую матрицу за T, то в результате выполнения команды <em>glMultMatrix</em> текущей становится матрица  M * T. Однако обычно для изменения матрицы того или иного типа удобно  использовать специальные команды, которые по значениям своих параметров создают  нужную матрицу и умножают ее на текущую.<br>
+  В целом, для отображения  трехмерных объектов сцены в окно приложения используется последовательность,  показанная на рисунке.<br>
+  <strong>Внимание</strong>: все преобразования объектов и камеры в OpenGL  производятся с помощью умножения векторов координат на матрицы. Причем  умножение происходит на <em><u>текущую матрицу</u></em>&nbsp;в  момент определения координаты командой <em>glVertex*</em> и некоторыми другими. </p>
+<p align="center"><img width="395" height="311" src="lk4_clip_image011.gif"> <br>
+  Рисунок  &ndash; конвейер матричных <br>
+  преобразований OpenGL </p>
+<p>&nbsp;</p>
+<h2><a name="_Toc307897372">2.2&nbsp;Проекции</a></h2>
+<p>&nbsp;</p>
+<p>В OpenGL существуют стандартные  команды для задания ортографической (параллельной) и перспективной проекций.  Первый тип проекции может быть задан командами</p>
+<table border="0" cellpadding="0" width="59%">
+  <tr>
+    <td width="98%"><p>void <strong>glOrtho </strong>(GLdouble <em>left</em>, GLdouble <em>right</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>bottom</em>,    GLdouble <em>top</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>near</em>, GLdouble <em>far</em>)<br>
+      void <strong>gluOrtho2D</strong> (GLdouble <em>left</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>right</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>bottom</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>top</em>)</p></td>
+  </tr>
+</table>
+<p align="center"><img width="330" height="132" src="lk4_clip_image012.gif"><br>
+  Рисунок  &ndash; Ортографическая  проекция <br>
+  Первая команда создает  матрицу проекции в усеченный объем видимости (параллелепипед видимости) в  левосторонней системе координат. Параметры команды задают точки (<em>left,  bottom, znear</em>) и (<em>right, top, zfar</em>), которые отвечают левому нижнему  и правому верхнему углам окна вывода. Параметры&nbsp;<em>near</em>&nbsp;и&nbsp;<em>far</em>&nbsp;задают расстояние до ближней и дальней плоскостей  отсечения по удалению от точки (0,0,0) и могут быть отрицательными.<br>
+  Во второй команде, в  отличие от первой, значения&nbsp;<em>near</em>&nbsp;и&nbsp;<em>far</em>&nbsp;устанавливаются равными &ndash;1 и 1 соответственно. Это  удобно, если OpenGL используется для рисования двумерных объектов. В этом  случае положение вершин можно задавать, используя команды <em>glVertex2*()</em>.<br>
+  Перспективная проекция  определяется командой</p>
+<table border="0" cellpadding="0" width="62%">
+  <tr>
+    <td width="98%"><p>void <strong>gluPerspective</strong> (GLdouble <em>angley</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>aspect</em>,<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;GLdouble <em>znear</em>, <br>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLdouble <em>zfar</em>)&nbsp; </p></td>
+  </tr>
+</table>
+<p>которая задает усеченный  конус видимости в левосторонней системе координат. Параметр <em>angley</em> определяет угол видимости в градусах по оси у и должен находиться в  диапазоне от 0 до 180. Угол видимости вдоль оси <em>x</em> задается параметром <em>aspect</em>, который обычно задается как  отношение сторон области вывода (как правило, размеров окна) Параметры <em>zfar </em>и <em>znear </em>задают расстояние от наблюдателя до плоскостей отсечения по  глубине и должны быть положительными. Чем больше отношение <em>zfar</em>/<em>znear</em>,  тем хуже в буфере глубины будут различаться расположенные рядом поверхности,  так как по умолчанию в него будет записываться &laquo;сжатая&raquo; глубина в диапазоне от  0 до 1.<br>
+  <img width="202" height="146" src="lk4_clip_image013.gif"><br>
+  Рисунок  &ndash; Перспективная проекция</p>
+<p>Прежде чем задавать  матрицы проекций, не забудьте включить режим работы с нужной матрицей командой <em>glMatrixMode(</em>GL_PROJECTION<strong><em>)</em></strong><strong> </strong>и сбросить текущую,  вызвав <em>glLoadIdentity()</em>.<br>
+  Например:</p>
+<table border="0" cellpadding="0" width="44%">
+  <tr>
+    <td width="98%"><p>/* ортографическая проекция */ <br>
+      glMatrixMode(GL_PROJECTION);<br>
+      glLoadIdentity();<br>
+      glOrtho(0, w, 0, h, -1.0, 1.0); </p></td>
+  </tr>
+</table>
+<h2><a name="_Toc307897373"></a><a name="bookmark0">2.3&nbsp;Соотношение сторон и видовые окна</a></h2>
+<p>&nbsp;</p>
+<p>Сам по себе параметр <em>соотношение сторон</em> <em>(</em><em>aspect</em><em>ratio</em>) применим к любому  прямо&shy;угольнику и означает отношение его ширины к высоте. Существующая в  графической системе независимость между объектами, визуализацией и настройкой  окна приложения может привести к нежелательным побочным эффектам, в частности  искажению пропор&shy;ций между продольными и поперечными размерами объектов на  экране. Соотношение сторон прямоугольника видимости задается аргументами  функции glOrtho(). <br>
+  <strong><em>Видовое окно</em></strong> (<strong><em>viewport</em></strong>) &mdash; это прямоугольная  область в пределах окна на экране (окно в окне). По умолчанию видовое окно  занимает всю область экрана, запрошенную у операционной системы, но можно ус&shy;тановить  и другие его размеры, вызывав функцию glViewport():</p>
+<p>void <strong>glViewport</strong>(GLint  х, GLint  у, GLsizei  w, GLsizei h); </p>
+<p>Первые два аргумента этой функции &ndash; <em>х</em> и <em>у</em> &ndash; положение левого нижнего угла прямо&shy;угольника видового окна относительно  левого нижнего угла выделенной области экрана. Следующие аргументы &ndash; w и h &ndash; задают высоту и ширину  видового окна. Все параметры задаются как целые числа и измеряются в пикселях.  Соответствие между отсекающей рамкой (прямоугольником видимости) и видовым  окном на экране иллюстрируется на рисунке. При заданных размерах окна  приложения таким способом можно в прикладной программе устранить искажение  пропорций изображения.</p>
+<p align="center"><img width="444" height="203" src="lk4_clip_image015.jpg"><br>
+  Рисунок  &ndash; Соответствие между областью видимости и <br>
+  видовым экраном</p>
+<p>Параметры видового окна также  характеризуют текущее состояние графической систе&shy;мы. Если изменить их между  последовательными циклами тонирования изображения или циклами повторения вывода  изображений одних и тех же объектов, то можно получить эффект появления  нескольких изображений на поле окна, причем управлять можно не только  положением видового окна, но и соотношением его сторон. </p>
+<h2><a name="_Toc307897374">2.4</a>&nbsp;Модельно-видовые преобразования </h2>
+<p>&nbsp;</p>
+<p>К модельно-видовым  преобразованиям относятся перенос, поворот и изменение масштаба вдоль  координатных осей. Для проведения этих операций достаточно умножить на  соответствующую матрицу каждую вершину объекта и получить измененные координаты  этой вершины:</p>
+<p>(x&rsquo;, y&rsquo;, z&rsquo;, 1)T&nbsp;= M * (x, y, z, 1)T</p>
+<p>где M &ndash; матрица  модельно-видового преобразования. Перспективное преобразование и проектирование  производится аналогично. Сама матрица может быть создана с помощью следующих  команд:</p>
+<div align="center">
+  <table border="0" cellpadding="0" width="59%">
+    <tr>
+      <td width="98%"><p>void <strong>glTranslate[f    d] </strong>(GLtype <em>x</em>, <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLtype <em>y</em>, <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;GLtype <em>z</em>)<br>
+        void <strong>glRotate[f    d] </strong>(GLtype <em>angle</em>, <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLtype <em>x</em>, <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLtype <em>y</em>,<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLtype z)<br>
+        void <strong>glScale[f    d] </strong>(GLtype <em>x</em>, <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLtype <em>y</em>, <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; GLtype <em>z</em>)</p></td>
+    </tr>
+  </table>
+</div>
+<p><strong>glTranlsate</strong>*()  производит перенос объекта, прибавляя к координатам его вершин значения своих  параметров.<br>
+  <strong>glRotate</strong>*()&nbsp;производит поворот объекта против  часовой стрелки на угол&nbsp;<em>angle</em>&nbsp;(измеряется в градусах) вокруг вектора (<em>x,y,z</em>).<br>
+  <strong>glScale</strong>*()  производит масштабирование объекта (сжатие или растяжение) вдоль вектора  (x,y,z), умножая соответствующие координаты его вершин на значения своих  параметров.<br>
+  Все эти преобразования  изменяют текущую матрицу, а поэтому <em><u>применяются  к примитивам, которые определяются позже</u></em>. В случае, если надо, например,  повернуть один объект сцены, а другой оставить неподвижным, удобно сначала  сохранить текущую видовую матрицу в стеке командой <em>glPushMatrix()</em>, затем вызвать <em>glRotate()</em> с нужными параметрами, описать примитивы, из которых состоит этот объект, а  затем восстановить текущую матрицу командой <em>glPopMatrix()</em>.<br>
+  Кроме изменения положения  самого объекта, часто бывает необходимо изменить положение наблюдателя, что  также приводит к изменению модельно-видовой матрицы. Это можно сделать с  помощью команды</p>
+<table border="0" cellpadding="0" width="76%">
+  <tr>
+    <td width="99%"><p>void <strong>gluLookAt </strong><br>
+      <strong>&nbsp; </strong>(GLdouble <em>eyex</em>,    GLdouble <em>eyey</em>, GLdouble <em>eyez</em>, <br>
+      &nbsp;&nbsp; GLdouble <em>centerx</em>, GLdouble <em>centery</em>,    GLdouble <em>centerz</em>,<br>
+      &nbsp;&nbsp; GLdouble <em>upx</em>, GLdouble <em>upy</em>,    GLdouble <em>upz</em>)</p></td>
+  </tr>
+</table>
+<p>где точка (<em>eyex,eyey,eyez</em>)  определяет точку наблюдения, (<em>centerx, centery, centerz</em>) задает центр сцены,  который будет проектироваться в центр области вывода, а вектор (<em>upx,upy,upz</em>)  задает положительное направление оси у, определяя поворот камеры. Если,  например, камеру не надо поворачивать, то задается значение (0,1,0), а со  значением (0,-1,0) сцена будет перевернута.<br>
+  Строго говоря, эта  команда совершает перенос и поворот объектов сцены, но в таком виде задавать  параметры бывает удобнее. Следует отметить, что вызывать команду <em>gluLookAt()</em> имеет смысл&nbsp;<em><u>перед</u>&nbsp;</em>определением преобразований объектов, когда модельно-видовая матрица  равна единичной.<br>
+  <strong>Внимание:</strong> В общем случае матричные  преобразования в OpenGL нужно записывать в обратном порядке. Например, если требуется  сначала повернуть объект, а затем передвинуть его, сначала необходимо вызвать  команду <em>glTranslate()</em>, а только потом  &ndash; <em>glRotate()</em>. После этого необходимо определить  сам объект. </p>
+<p><a href="../../presentations/3-5 лекции Open GL.ppt" target="_new">Презентация к лекциям 3-5</a></p>
+</body>
+</html>

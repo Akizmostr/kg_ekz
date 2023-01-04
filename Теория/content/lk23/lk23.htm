@@ -1,0 +1,287 @@
+<!-- (C) 2016 Хаджинова Н.В., каф. ИТАС, БГУИР -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//RU">
+<HTML>
+<HEAD>
+<LINK rel=stylesheet href="Оболочка/css/style.css" type=text/css>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Content-Language" CONTENT="ru">
+<title>Лекция № 23 &quot;Система трехмерной компьютерной графики 3ds Max. Основные возможности 3ds Max. Материалы. Освещение.&quot;</title>
+</head>
+
+<body>
+<div align="center">
+  <h1>Лекция № 23 &quot;<strong>Система трехмерной компьютерной графики 3ds Max</strong>. Материалы. Освещение.&quot; </h1>
+</div>
+<hr>
+<h2>Темы, рассматриваемые в данной лекции: </h2>
+<ol>
+  <li>Назначение материалов объектам. Управление текстурами материалов. Создание материалов</li>
+  <li>Освещение сцены. Установка съемочных камер<hr>
+  </li>
+</ol>
+<h3 align="left">4.8&nbsp; Материалы</h3>
+<p>Материал  в 3ds Max&nbsp;&ndash; набор настроек, определяющих внешний вид объекта: цвет,  прозрачность, текстура, блики и др. Для настройки материала выбрать из меню  команду <strong>Rendering &ndash; Material Editor</strong>.  Появляется окно редактора материалов (см. рисунок 4.21).</p>
+<h4 align="left">4.8.1&nbsp;&nbsp; Общий  порядок создания материала и его назначения объекту</h4>
+<p><strong>1</strong>&nbsp;&nbsp;&nbsp; Выбрать  свободную ячейку для материала.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Ввести имя  материала (по умолчанию указан номер материала, например <strong>01</strong>, и имя <strong>Default</strong>).<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Выбрать  метод тонирования (<strong>shader</strong>). От него  зависит набор параметров материала. Наиболее часто применяемые методы  тонирования:</p>
+<ul>
+  <li><strong>Blinn</strong>&nbsp;&ndash; основной метод  тонирования;</li>
+  <li><strong>Oren-Nayar-Blinn</strong> &ndash; метод тонирования для  создания матовых, шероховатых поверхностей;</li>
+  <li><strong>Metal</strong>&nbsp;&ndash; для создания  металлических поверхностей;</li>
+  <li><strong>Anisotropic</strong>&nbsp;&ndash; для объектов с  бликами.</li>
+</ul>
+<p><strong>4</strong>&nbsp;&nbsp;&nbsp; В панели  настройки материала, а именно &ndash; в области <strong>Basic  Parameters</strong>, ввести параметры материала, например:</p>
+<ul>
+  <li><strong>Diffuse</strong>&nbsp;- основной цвет  материала. Щелчком по этой кнопке вызывается окно <strong>Color Selection</strong> для выбора цвета материала. При этом используется цветовая  модель RGB и HSV;</li>
+  <li><strong>Ambient</strong>&nbsp;&ndash; оттенок материала  при слабом освещении;</li>
+  <li><strong>Specular</strong>&nbsp;&ndash; цвет блика;</li>
+  <li><strong>Specular Level</strong>&nbsp;&ndash; яркость блика;</li>
+  <li><strong>Glossiness</strong>&nbsp;&ndash; глянцевитость  материала;</li>
+  <li><strong>Opacity</strong>&nbsp;&ndash; непрозрачность  (0&nbsp;&ndash; прозрачно, 100&nbsp;&ndash; непрозрачность);</li>
+  <li><strong>Roughness</strong>&nbsp;&ndash; шероховатость,  неровность. Этот параметр имеется только при использовании метода тонирования <strong>Oren-Nayar-Blinn</strong>.</li>
+</ul>
+<p><strong>5</strong>&nbsp;&nbsp;&nbsp; Выделить  желаемый объект и нажать кнопку <strong>Assign  Material to Selection</strong> (ее расположение показано на рисунке 4.22, третья  кнопка слева в панели под ячейками материалов).<br>
+  <strong>6</strong>&nbsp;&nbsp;&nbsp; Чтобы  изображение объекта изменилось с учетом всех параметров созданного материала,  может потребоваться нажать кнопку <strong>Show  Map in Viewpo</strong><strong>r</strong><strong>t</strong> (девятая кнопка слева).</p>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="328" valign="top"><p align="center"><img src="lk23_clip_image002.jpg" alt="" width="297" height="465"></p></td>
+    <td width="328" valign="top"><p><img src="lk23_clip_image004.jpg" alt="" width="316" height="464"></p></td>
+  </tr>
+  <tr>
+    <td width="328" valign="top"><p align="center"><strong>Рисунок 4.21 &ndash; </strong><strong>Окно редактора <br>
+      материалов (исходный вид)</strong></p></td>
+    <td width="328" valign="top"><p align="center"><strong>Рисунок 4.22 &ndash; </strong><strong>Окно редактора <br>
+      материалов (с созданным материалом)</strong></p></td>
+  </tr>
+</table>
+<p>Если  требуется удалить созданный материал, то следует выделить соответствующую  ячейку в окне редактора материалов и нажать кнопку рядом с именем материала. Из  появившегося окна <strong>Material/Map Browser</strong> выбрать отметку <strong>Standard</strong>.</p>
+<h4 align="left">4.8.2&nbsp;&nbsp; Сложные  материалы. Карты материалов</h4>
+<p>Для  создания сложных материалов используется набор каналов. Каждый канал определяет  некоторое свойство материала, например:</p>
+<ul>
+  <li><strong>Diffuse</strong>&nbsp;&ndash; основной цвет;</li>
+  <li><strong>Opacity</strong>&nbsp;&ndash; непрозрачность;</li>
+  <li><strong>Bump</strong>&nbsp;&ndash; рельефность;</li>
+  <li><strong>Reflection</strong>&nbsp;&ndash; отражение;</li>
+  <li><strong>Refraction</strong>&nbsp;&ndash; преломление света и  т.д.</li>
+</ul>
+<p>Каждому  каналу можно присвоить его величину, т.е. силу его проявления <strong>Amount</strong>, а также назначить каналу карту.  Карта&nbsp;&ndash; набор параметров, описывающих данное свойство, или просто растровое  изображение из стандартного набора в составе 3ds Max или созданное в любом  другом графическом редакторе.<br>
+  Сложные  материалы создаются с использованием карт следующим образом.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; В окне <strong>Material Editor</strong> (см. рисунок 4.21) раскрыть  вкладку <strong>Maps</strong>. Появляется панель,  показанная на рисунке 4.23.</p>
+<p align="center"><img src="lk23_clip_image006.jpg" alt="" width="375" height="350"><br>
+  <strong>Рисунок 4.23 &ndash;</strong><strong> Окно выбора карт для создания сложных материалов</strong><br>
+  </p>
+<p align="left
+"><strong>2</strong>&nbsp;&nbsp;&nbsp; Чтобы  назначить каналу карту, щёлкнуть по кнопке <strong>Map</strong> (по умолчанию на ней указана отметка <strong>None</strong>). Появляется окно выбора карт, например:</p>
+<ul>
+  <li><strong>Checker</strong>&nbsp;&ndash; рисунок в виде  шахматной доски;</li>
+  <li><strong>Wood</strong>&nbsp;&ndash; рисунок под дерево;</li>
+  <li><strong>Brick</strong>&nbsp;&ndash; кирпич;</li>
+  <li><strong>Bitmap</strong>&nbsp;&ndash; выбор произвольного  растрового рисунка;</li>
+  <li><strong>Raytrace</strong>&nbsp;&ndash; параметры отражения  и преломления для параметров <strong>Reflection</strong> и <strong>Retraction</strong>;</li>
+  <li><strong>Dent</strong>&nbsp;&ndash; неровности, и др.</li>
+</ul>
+<p><strong>3</strong>&nbsp;&nbsp;&nbsp; Выбрать  желаемую карту. Появляется окно настройки параметров карты.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Для  возврата в окно редактора материала нажать кнопку <strong>Goto Parent</strong>.<br>
+<strong>5</strong>&nbsp;&nbsp;&nbsp; Выделить  желаемый объект и нажать кнопки:</p>
+<ul>
+  <li><strong>Assign Material to  Selection</strong>&nbsp;(см.  рисунок 4.22)- чтобы назначить материал выбранному объекту;</li>
+  <li><strong>Show Map in Viewpo</strong><strong>r</strong><strong>t</strong> (девятая  кнопка слева в панели под ячейками материалов) &ndash; чтобы выбранная карта  отображалась в окне перспективы.</li>
+</ul>
+<p>Примечание &ndash;  Полностью все характеристики объекта, заданные картой, отображаются при его  визуализации. Для визуализации объекта нажать клавишу F9. Подробнее о визуализации  см. в разделе 4.10.<br>
+  Можно к  одному каналу применить несколько карт (пример см. ниже).<br>
+  Для  отмены назначенной карты щёлкнуть по кнопке <strong>Map</strong> правой кнопкой мыши.<br>
+  <strong>Пример</strong> - Создание материала &laquo;стекло&raquo;.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Выбрать  окно <strong>Material Editor</strong> и создать новый  материал со следующими настройками:</p>
+<ul>
+  <li><strong>Shader: Blinn;</strong></li>
+  <li><strong>Diffuse: RGB &ndash; 0, 0, 0;</strong></li>
+  <li><strong>Specular: RGB &ndash; 229, 229,  229;</strong></li>
+  <li><strong>Specular Level: 100;</strong></li>
+  <li><strong>Glossiness: 70.</strong></li>
+</ul>
+<p><strong>2</strong>&nbsp;&nbsp;&nbsp; На вкладке <strong>Maps</strong> установить для каналов <strong>Reflection</strong> и <strong>Refraction</strong> карту <strong>Retrace</strong>,  с параметром <strong>Amount</strong>: 20 и 80  соответственно.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Применить  материал к объекту и нажать клавишу <strong>F9</strong> для просмотра результатов.<br>
+  <strong>Пример</strong> &ndash; Создание материала &laquo;зеркало&raquo;.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Задать  параметры аналогично задаваемым для материала &laquo;стекло&raquo;.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Указать  для канала <strong>Reflection</strong> карту <strong>Raytrace</strong> и настройку <strong>Amount 90</strong>. Параметр <strong>Refraction</strong> не используется.<br>
+  <strong>Пример </strong>&ndash; Раскраска плоскости в  шахматную доску.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить  примитив <strong>Plane</strong>.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Перейти в  окно <strong>Material Editor</strong> и раскрыть  панель <strong>Maps</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Для канала <strong>Diffuse</strong> нажать кнопку <strong>Map</strong> и выбрать карту <strong>Checker</strong>.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; В  появившемся окне параметров карты в полях <strong>Tiling</strong> выбрать желаемое количество клеток. В этом окне можно выбрать и другие  параметры, например, <strong>Color</strong>&nbsp;&ndash;  цвет клетки.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Нажать  клавишу <strong>Goto Parent</strong> для возврата в  окно материала.<br>
+  <strong>6</strong>&nbsp;&nbsp;&nbsp; Применить  материал к объекту.<br>
+  <strong>Пример</strong> (применение нескольких  карт сразу) &ndash; Построить объект, напоминающий плетёную корзину.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Перейти в  окно<strong> Material Editor</strong>.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Открыть  вкладку <strong>Maps</strong>. Для канала <strong>Diffuse</strong> выбрать карту <strong>Wood</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; В  появившемся окне параметров карты щёлкнуть по кнопке выбранной карты, т.е. в  данном случае по кнопке <strong>Wood</strong>. Снова  появляется окно выбора карты. В нем выбрать карту <strong>Waves</strong>.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Применить  карту к объекту (например, к примитиву <strong>Box</strong>).</p>
+<h4 align="left">4.8.3&nbsp;&nbsp; Нанесение  на объект изображения из растрового файла</h4>
+<p><strong>1</strong>&nbsp;&nbsp;&nbsp; Перейти в  окно <strong>Material Editor</strong>. Выбрать  свободную ячейку для материала и присвоить ему имя.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Перейти на  вкладку <strong>Map</strong><strong>s</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Для канала <strong>Diffuse</strong> щёлкнуть по кнопке <strong>Map</strong>.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; В  появившемся окне выбрать карту <strong>Bitmap</strong> и выбрать файл с желаемым растровым изображением.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Выделить  желаемый объект и применить к нему созданный материал (т.е. растровое  изображение), нажав кнопку <strong>Assign  Material to Selection</strong>.<br>
+  <strong>6</strong>&nbsp;&nbsp;&nbsp; Чтобы  выбранное растровое изображение отображалось на объекте, нажать кнопку <strong>Show Map in Viewport</strong> в окне редактора  материалов (девятая кнопка слева).<br>
+  Если  требуется использовать только часть растрового изображения, то выполнить  следующее.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Создать  материал на основе изображения из растрового файла, как показано выше (шаги  1-4). При этом в окне <strong>Material Editor</strong> появляется новая вкладка - <strong>Bitmap  Parameters</strong>.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; В окне <strong>Material Editor</strong> на вкладке <strong>Bitmap Parameters</strong> нажать кнопку <strong>View Image</strong>. Появляется окно с выбранным  растровым изображением и рамкой для выбора части изображения.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Выделить  желаемую часть изображения и закрыть окно с изображением.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; В области <strong>Bitmap Parameters</strong> установить флажок <strong>Apply</strong> <br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Применить  созданный материал к объекту.<br>
+  Если  для объекта использован материал с растровой картой то после его нанесения  следует воспользоваться модификатором <strong>UVW  Map</strong>, который управляет проецированием растрового изображения на объект. Для  этого после нанесения растрового изображения на объект выполнить следующее.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; На  командной панели (в правой части экрана) перейти на вкладку <strong>Modify</strong>. Применить к объекту модификатор <strong>UVW Map</strong>, выбрав его из списка <strong>Modifier</strong><strong> </strong><strong>list</strong>.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; В  командной панели выбрать способ проецирования рисунка на поверхность объекта.  Основные способы: <strong>Planar</strong>; <strong>Spherical</strong>; <strong>Cylindrical</strong>; <strong>Shrink</strong> и несколько  других.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Если  требуется, чтобы изображение состояло из нескольких сегментов, выбрать их количество  в полях <strong>Tile</strong>.</p>
+<h3 align="left">4.9&nbsp; Освещение. Источники  света. </h3>
+<p>По  умолчанию в изображении имеется стандартный источник света. Основные  возможности управления стандартным источником света следующие:</p>
+<ul>
+  <li>команда <strong>View&nbsp;&ndash; Viewport  Configuration</strong>&nbsp;&ndash; выбор количества стандартных источников света (один  или два):</li>
+  <li><strong>1 Light;</strong></li>
+  <li><strong>2 Lights;</strong></li>
+  <li><strong>Rendering&nbsp;&ndash;  Environment&nbsp;&ndash; Global Lighting</strong>: установка цветов для стандартного источника  света.</li>
+</ul>
+<p>При  установке новых (пользовательских) источников света стандартный источник  отключается. Установка нового источника света выполняется в следующем порядке.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; На командной  панели (в правой части экрана) выбрать вкладку <strong>Create</strong>, а на ней &ndash; вкладку <strong>Lights</strong>. <br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Выбрать для  создаваемого источника вид <strong>Standard</strong> (другой возможный вид &ndash; <strong>Photometric</strong> &ndash;  достаточно сложен). <br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; На вкладке <strong>Object</strong><strong> </strong><strong>type</strong> выбрать  тип источника света и установить его с помощью мыши (порядок установки  несколько различается в зависимости от выбранного типа источника). Основные  типы источников света следующие:</p>
+<ul>
+  <li><strong>Omni</strong>&nbsp;&ndash; всенаправленный  источник света.</li>
+  <li><strong>Target Spot</strong> (нацеленный  прожектор)&nbsp;&ndash; точечный источник в виде конуса. Для его установки щёлкнуть  мышью в точке установки источника; затем, не отпуская мышь, указать направление  источника. Отпустить мышь в точке нацеливания источника (<strong>Target</strong>);</li>
+  <li><strong>Target Direct</strong>&nbsp;&ndash; аналогично <strong>Target Spot</strong>, но источник не точечный а  плоский (круглый, прямоугольный и т.д);</li>
+  <li><strong>Free Spot, Free Direct</strong>&nbsp;&ndash; аналогичны <strong>Target Spot </strong><strong>и</strong><strong> Target Direct</strong> но точка цели (<strong>Target</strong>) не указывается;</li>
+  <li><strong>Skylight</strong>&nbsp;&ndash; освещение,  аналогичное свету небесного купола.</li>
+</ul>
+<p>После  создания источника света можно задавать его параметры на нескольких вкладках,  появляющихся в командной панели. Эти параметры можно затем изменять, как  показано ниже.<br>
+  Источника  света действуют только в окне перспективы (<strong>Perspective</strong>).  Чтобы полностью просмотреть действие источников света, требуется выполнить  визуализацию, как показано в разделе 4.10.<br>
+  Для  настройки параметров источника света требуется выделить его и перейти на  вкладку <strong>Modify</strong>. Появляется набор  вкладок для настройки источника света (см. рисунок 4.24).<br>
+  Примечание &ndash; Для  выбора источников света часто удобно использовать выбор по имени, как показано  в п.&nbsp;4.2.1.<br>
+  Основные  параметры источников света:</p>
+<ul>
+  <li>вкладка <strong>Light Type</strong>:</li>
+  <li><strong>On</strong> (флажок)&nbsp;&ndash; включение и выключение источников света;</li>
+  <li><strong>Spot, Directional</strong> или <strong>Omni</strong>&nbsp;&ndash; выбор типа  источника света;</li>
+  <li>вкладка <strong>Shadows</strong>&nbsp;&ndash;  настройка теней;</li>
+  <li>вкладка <strong>Intensity/Color/Attenuation</strong>:</li>
+  <li><strong>Multiplier</strong>&nbsp;- сила света;</li>
+  <li>поле для выбора оттенка света;</li>
+  <li>поля <strong>Decay</strong> и <strong>Attenuation</strong>&nbsp;&ndash; управление  затуханием света по мере удаления от источника.</li>
+</ul>
+<p>Кроме  того, для настройки источников света можно использовать окно, вызываемое  командой <strong>Tools&nbsp;&ndash; Lights Lister</strong> (см. рисунок 4.25). В нем выводится перечень всех источников света и некоторые их  параметры. Нажатием на кнопку слева от поля <strong>On</strong> вызывается панель настройки источника света, показанная  на рисунке 4.24.</p>
+<table border="0" cellspacing="0" cellpadding="0" width="679">
+  <tr>
+    <td width="178" rowspan="2" valign="top"><br>
+      <img src="lk23_clip_image008.jpg" alt="" width="163" height="576"><br>
+      <strong>Рисунок 4.24</strong><strong> - </strong><strong>Панель настройки источника света</strong><strong> </strong></td>
+    <td width="502" valign="top"><p><img src="lk23_clip_image010.jpg" alt="" width="487" height="230"><br>
+      <strong>Рисунок 4.25 &ndash; </strong><strong>Перечень    источников света</strong></p></td>
+  </tr>
+  <tr>
+    <td width="502" valign="top"><p>&nbsp;</p></td>
+  </tr>
+</table>
+<p><strong>Пример</strong> &ndash; Построить изображение  подсвеченной сферы (напоминающее планету в космосе).<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить  примитив-сферу.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Установить  источник света с типом <strong>Target Direct</strong>.  Расположить его так, чтобы он был направлен на сферу.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Выбрать  установленный источник света. Перейти на вкладку <strong>Modify</strong>. <br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Выбрать вкладку <strong>Directional</strong><strong> </strong><strong>Parameters</strong>. В области <strong>Light Cone</strong> подобрать  желаемым образом следующие параметры:</p>
+<ul>
+  <li><strong>Hotspot/Beam</strong>&nbsp;&ndash; область с полной освещённостью;</li>
+  <li><strong>Falloff/Field</strong>&nbsp;&ndash; область  постепенного затемнения (обычно этот параметр задают немного большим, чем <strong>Hotspot/Beam</strong>).</li>
+</ul>
+<p><strong>5</strong>&nbsp;&nbsp;&nbsp; Выполнить  визуализацию нажатием клавиши <strong>F</strong><strong>9</strong>.<br>
+  <strong>Пример</strong> &ndash; Использование источник  света в качестве прожектора (для проецирования отражения изображения из растрового  файла на объект): получить изображение, аналогичное показанному на рисунке 4.26.</p>
+<p><br>
+  <img src="lk23_clip_image012.jpg" alt="" width="642" height="438"><br>
+  <strong>Рисунок 4.26 &ndash;</strong><strong> Проецирование растровых изображений <br>
+    с помощью источника света</strong><br>
+</p>
+<p><strong>1</strong>&nbsp;&nbsp;&nbsp; Построить плоскость  (примитив <strong>Plane</strong>).<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Разместить  источник света типа <strong>Target Direct</strong> таким  образом, чтобы на плоскости отражалось круглое пятно. Чтобы видеть это,  потребуется выполнить визуализацию изображения нажатием клавиши <strong>F</strong><strong>9</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Выбрать  источник света. В командной панели перейти на вкладку <strong>Modify</strong>.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Выбрать  растровое изображение для проецирования. Для этого на вкладке <strong>Modify</strong> выбрать вкладку <strong>Advanced Effects</strong> (см. рисунок 4.26). В  области <strong>Projector Map</strong> установить  флажок <strong>Map</strong>. Щёлкнуть по размещённой  рядом кнопке. В появившемся окне выбрать <strong>Bitmap</strong>,  затем выбрать желаемый файл.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Чтобы  получить изображение, выполнить визуализацию.</p>
+<h3><strong>&nbsp;4.9.1 Установка съемочных камер</strong></h3>
+<p>Рассматриваемые ранее при изучении видовых окон различные точки зрения наблюдателя почти всегда подходят для стадии создания и редактирования объектов трехмерных сцен, однако все они (может быть за исключением вида&nbsp;<strong>Perspective (Перспектива))&nbsp;</strong>выглядят нереально и. безусловно, не годятся для визуализации сцен, требующих реализма. Для решения этой задачи предназначены специальные служебные объекты -&nbsp;<strong>Съемочные Камеры&nbsp;</strong>или просто&nbsp;<strong>Камеры.</strong></p>
+<p><strong align="left">Основные параметры камер</strong></p>
+<p><br>
+  В среде Мах используются два вида камер:</p>
+<ul>
+  <li><strong>Target Camera (Нацеленная Камера).</strong></li>
+  <li><strong align="left">Free Camera (Свободная Камера).</strong><br>
+  </li>
+</ul>
+<p align="left">Второй тип съемочных камер менее удобен для большинства случаев, поэтому остановимся на первом и рассмотрим его подробнее.<br>
+  <strong>Нацеленная Камера&nbsp;</strong>представляет собой объект, по структуре близкий к рассмотренному ранее источнику света типа&nbsp;<strong>Target Spot (Нацеленный Прожектор),&nbsp;</strong>- это точка объектива камеры, показываемая в окнах в виде синего изображения кинокамеры и&nbsp;<strong>Target (Точка Цели)&nbsp;</strong>(отрисовываемая синим кубиком), в которую всегда направлен воображаемый луч зрения наблюдателя (рис. 6.14).<br>
+Ось луча зрения отрисовывается прямой голубого цвета, соединяющей объектив камеры и кубик цели.</p>
+<p align="left"><img src="lk23_clip_image014.jpg" width="540" height="569"><br>
+  <br>
+  <strong><em>Рисунок 4.27.&nbsp;</em></strong><em>Отображение Target Camera (Нацеленной Камеры)</em><br>
+</p>
+<p align="left">Разберем основные параметры настройки камер. Для этого необходимо перейти в панель&nbsp;<strong>Create (Создать)&nbsp;</strong>и раскрыть кнопкой&nbsp;<strong>Cameras (Камеры)&nbsp;</strong>свиток типов съемочных камер. Далее следует щелкнуть на кнопке&nbsp;<strong>Target (Нацеленная),&nbsp;</strong>после чего отобразится свиток&nbsp;<strong>Parameters (Параметры),&nbsp;</strong>содержащий все необходимые инструменты настройки (рис. 6.15).<br>
+</p>
+<p align="left">Действия пользователя по созданию камер аналогичны описанным для осветителей типов&nbsp;<strong>Target (Нацеленных) и Free (Свободных),&nbsp;</strong>поэтому сразу обратимся к разбору содержимого выбранного свитка.<br>
+</p>
+<p align="left">Пара связанных счетчиков&nbsp;<strong>Lens (Линзы) и FOV&nbsp;</strong>или&nbsp;<strong>Field-of-View (Поле Зрения)&nbsp;</strong>управляет величиной поля зрения камеры или области видимого наблюдателю изображения. При изменении одного из этих счетчиков пропорционально меняется значение другого. Расположенный рядом список кнопок выбирает способ задания поля зрения:<br>
+</p>
+<p align="left">Поле зрения измеряется по горизонтали вида. Поле зрения измеряется по вертикали вида. Поле зрения измеряется по диагонали вида.<br>
+</p>
+<p align="left">Далее следует группа стандартных наборов линз&nbsp;<strong>Stock Lenses (Шаблонные Линзы)&nbsp;</strong>для быстрого выбора пары значений&nbsp;<strong>Lens (Линзы) и FOV (Поле Зрения).</strong><br>
+</p>
+<p align="left">Расположенный ниже список выбора типа камеры становится доступен при редактировании уже созданной камеры через панель&nbsp;<strong>Modify (Редактировать),&nbsp;</strong>а два флажка&nbsp;<strong>Show Cone (Показать Границу Поля Зрения) и Show Horizon (Показать Линию Горизонта)&nbsp;</strong>управляют отрисовкой геометрии камеры в видовых окнах.<br>
+</p>
+<p align="left"><img src="lk23_clip_image016.jpg" width="192" height="706"></p>
+<p align="left"><strong><em>Рисунок 4.28.&nbsp;Параметры Камер</em></strong><em></em><br>
+</p>
+<p align="left">Далее располагаются две группы настроек&nbsp;<strong>Environment Ranges (Диапазоны Видимости) и Clipping Planes (Плоскости Невидимости).</strong><br>
+</p>
+<p align="left">Первая группа содержит счетчики&nbsp;<strong>Near Range (Ближний Диапазон) и Far Range (Дальний Диапазон),&nbsp;</strong>которые задают границы начала и конца, используемые при визуализации сцен&nbsp;<strong>Environment Effects (Эффектов Окружения),&nbsp;</strong>таких как туман, глубина резкости и др.<br>
+Счетчики&nbsp;<strong>Near Clip (Ближняя Секущая Плоскость) и Far Clip (Дальняя Секущая Плоскость)&nbsp;</strong>второй группы позволяют установить диапазон трехмерного пространства, за пределами которого не будут отрисовываться объекты в видовых окнах и визуализироваться при обсчете. Это бывает необходимо в некоторых случаях сложной составной геометрии сцены (например, при визуализации интерьера помещения с точки постановки камеры, расположенной перед глухой стеной).</p>
+<p align="left"><br>
+  <img src="lk23_clip_image018.jpg" width="192" height="326"><br>
+  <strong><em>Рисунок 4.29</em></strong><br>
+</p>
+<p align="left">И последняя группа параметров&nbsp;<strong>Multi-Pass Effects (Многопроходные Эффекты)&nbsp;</strong>управляет настройками таких свойств визуализации, как&nbsp;<strong>Depth of Field (Глубина Резкости) и Motion Blur (Размытие Движения),&nbsp;</strong>выбор которых осуществляется из соответствующего списка (рис. 6.15а).<br>
+Одним из наиболее удобных свойств этой группы является возможность визуальной отладки эффекта непосредственно в видовом окне активной камеры. Дополнительные настройки, относящиеся к выбранному эффекту, содержатся в отдельном свитке. Более детально на Многопроходных Эффектах мы остановимся в главе &laquo;Визуализация и Специальные Эффекты&raquo;.<br>
+</p>
+<p align="left"><strong>Управление камерами</strong><br>
+</p>
+<p align="left">Для активизации панели инструментов управления камерой необходимо задать текущим видовым окном точку зрения выбранной съемочной камеры. В этом случае стандартная панель настройки видового окна, расположенная в правой нижней части&nbsp;<strong>Главного Окна&nbsp;</strong>Мах и рассмотренная ранее, примет иной вид (рис. 6.15):</p>
+<p align="left"><img src="lk23_clip_image020.jpg" width="191" height="75"></p>
+<p align="left"><strong><em>Рисунок 4.30&nbsp;</em></strong><em>Панель Управления видовым окном Камеры</em><br>
+</p>
+<div align="left">
+  <ul>
+    <li><strong>Dolly Camera (Наезд / Отъезд Камеры)&nbsp;</strong>- перемещает камеру по оси луча зрения к остающейся неподвижной точке цели, причем величина поля зрения не изменяется. Этот прием удобен для детального показа фрагмента видимой части сцены без изменения ее перспективы.&nbsp;<strong>Dolly Target (Наезд / Отъезд Точки Цели)&nbsp;</strong>- производит аналогичные действия с точкой цели, не изменяя положение камеры.<br>
+    </li>
+    <li><strong>Dolly Camera+Target (Наезд / Отъезд Камеры+Точки Цели) -&nbsp;</strong>перемещает одновременно камеру и ее цель вдоль оси луча зрения, сохраняя расстояние между ними постоянным.<br>
+    </li>
+    <li><strong>Perspective (Перспектива)&nbsp;</strong>- производит перемещение камеры к точке цели вдоль оси луча зрения, сохраняя размер поля зрения постоянным. Чаще всего эта кнопка может использоваться для коррекции искажений изображения, связанных с большим значением&nbsp;<strong>FOV (Поля зрения).</strong><br>
+    </li>
+    <li><strong>Roll Camera (Наклон Камеры)&nbsp;</strong>- поворачивает камеру вокруг оси луча зрения, задавая поворот изображения от 0 до 360 градусов.<br>
+    </li>
+    <li><strong>Field-of-View (Поле Зрения)&nbsp;</strong>- задает изменение ширины поля зрения, оставляя положение камеры и цели постоянными. При больших (близких и больших 90 градусов) значениях этого параметра происходят сильные искажения перспективы.<br>
+    </li>
+    <li><strong>Truck Camera (Слежение Камеры)&nbsp;</strong>- перемещает камеру совместно с точкой цели параллельно плоскости поля зрения, сохраняя неизменным угол зрения и расстояние от камеры до цели.<br>
+    </li>
+    <li><strong>Orbit Camera (Вращение Камеры по Орбите)&nbsp;</strong>- производит поворот камеры вокруг точки цели, не изменяя величины расстояния между ними. Этот инструмент применяется для визуальной настройки высоты подъема и угла зрения камеры, а также для &laquo;облета&raquo; камеры вокруг цели.&nbsp;<strong>Orbit Target (Вращение Цели по Орбите)&nbsp;</strong>- аналогично поворачивает точку цели вокруг камеры, выполняя круговую панораму трехмерной сцены.<br>
+    </li>
+  </ul>
+</div>
+<p align="left">Для выполнения команд управления видовым окном камеры необходимо щелкнуть на соответствующую кнопку панели инструментов управления, при этом курсор изменит свою форму, отобразив рисунок выбранной кнопки. Далее нужно расположить курсор в области видового окна камеры и, нажав левую кнопку мыши, перемещать ее:<br>
+</p>
+<div align="left">
+  <ul>
+    <li>по горизонтали при использовании инструмента&nbsp;<strong>Roll Camera (Наклон Камеры);</strong><br>
+    </li>
+    <li>в обоих направлениях для инструментов&nbsp;<strong>Truck Camera (Слежение Камеры) и Orbit Camera / Target (Вращение Камеры / Цели по Орбите);</strong><br>
+    </li>
+    <li>по вертикали для всех остальных команд.<br>
+    </li>
+  </ul>
+</div>
+<p>&nbsp;</p>
+<p><a href="../../presentations/21-24 лекция 3D'sMAX.ppt" target="_new">Презентация к лекциям 21-24</a></p>
+</body>
+</html>

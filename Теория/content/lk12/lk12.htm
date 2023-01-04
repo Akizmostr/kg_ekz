@@ -1,0 +1,832 @@
+<!-- (C) 2016 Хаджинова Н.В., каф. ИТАС, БГУИР -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//RU">
+<HTML>
+<HEAD>
+<LINK rel=stylesheet href="Оболочка/css/style.css" type=text/css>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Content-Language" CONTENT="ru">
+<title>Лекция № 12 &quot;Изображение трехмерных объектов&quot;</title>
+</head>
+
+<body>
+<div align="center">
+  <h1>Лекция № 12 &quot;<strong>Изображение трехмерных объектов</strong>&quot; </h1>
+</div>
+<hr>
+<h2>Темы, рассматриваемые в данной лекции: </h2>
+<ol>
+  <li>Этапы отображения трехмерных объектов.</li>
+  <li>Отсечение по видимому объему.</li>
+  <li>Нормализация видимого объема и переход к каноническому виду.</li>
+  <li>Представление пространственных форм. Параметрические бикубические куски. Полигональные сетки.</li>
+  <li>Представление полигональных сеток в ЭВМ.<hr>
+  </li>
+</ol>
+<p>Отсечение, т.е. процесс выделения  той информации, которая необходима для визуализации конкретной сцены или вида,  как части более обширной обстановки, применяется в алгоритмах удаления  невидимых линий и поверхностей, при построении теней, а также при формировании  фактуры (детализации строения поверхности).</p>
+<h2><a name="_Toc195990534">1.1.Двумерное отсечение</a></h2>
+<p>&nbsp;</p>
+<p>На рис.21 показана плоская сцена  и отсекающее окно регулярной формы. Регулярным отсекающим окном является  прямоугольник, стороны которого параллельны осям координат экрана. Целью  алгоритма отсечения является определение тех точек, отрезков или их частей,  которые лежат внутри отсекающего окна. Эти точки, отрезки или их части остаются  для визуализации, а все остальное отбрасывается.<br>
+  <img width="288" height="234" src="lk12_clip_image002.jpg" alt="LectSCGIm21"></p>
+<p>Поскольку в обычных сценах или  картинах, необходимо отсекать большое число отрезков или точек, то  эффективность алгоритмов отсечения представляет особый интерес. Во многих  случаях подавляющее большинство точек или отрезков лежит целиком внутри или вне  отсекающего окна. Поэтому важно уметь быстро отбирать отрезки, подобные ab, или  точки, подобные p, и отбрасывать отрезки, подобные ij, или точки, подобные q.<br>
+  Суть существующих алгоритмов  определения видимости заключается:</p>
+<ul>
+  <li>выборе  всех видимых отрезков (точек) по анализу соответствия их координат внутренней  области окна;</li>
+  <li>удалении  всех отрезков, оба конца которых, лежат слева, справа, сверху или снизу от  окна;</li>
+  <li>нахождении  точек пересечения оставшихся отрезков с ребрами окна и определении нахождения  этих точек в границах окна или вне его.</li>
+</ul>
+<p>Естественно, что наиболее  трудоемким, а потому требующим детального анализа, участком данного семейства  алгоритмов является третий пункт.<br>
+  Одним из наиболее эффективных  алгоритмов отсечения является алгоритм Сазерленда-Коэна, основанный на  разбиении отрезка.<br>
+  В алгоритме Сазерленда-Коэна не  производится проверка попадания точки пересечения внутрь окна, вместо этого  каждая из пары получающихся частей отрезка сохраняется или отбрасывается в  результате анализа кодов ее концевых точек.<br>
+  В алгоритме для определения той  из девяти областей, которой принадлежит конец ребра, вводится четырехразрядный  битовый код. Коды областей показаны на рис.22.<br>
+  <img width="182" height="140" src="lk12_clip_image004.jpg" alt="LectSCGIm22"></p>
+<p>Крайний правый бит считается  первым. В соответствующий бит заносится 1 при выполнении следующих условий:</p>
+<ul>
+  <li>для  первого бита &ndash; если точка левее окна;</li>
+  <li>для  второго бита &ndash; если точка правее окна;</li>
+  <li>для  третьего бита &ndash; если точка ниже окна;</li>
+  <li>для  четвертого бита &ndash; если точка выше окна.</li>
+</ul>
+<p>Наличие кодов позволяет ускорить  также и анализ отрезков по первым двум условиям. Если коды обоих концов отрезка  равны нулю, то обе эти точки лежат внутри окна, и отрезок видим. Если  логическое произведение кодов концевых точек отрезка не равно нулю, то отрезок  полностью невидим и его можно отбросить.<br>
+  Для более сложных отрезков  процесс их анализа выглядит следующим образом. Рассмотрим отрезок P1P2  на&nbsp; рис.23.<br>
+  <img width="206" height="194" src="lk12_clip_image006.jpg" alt="LectSCGIm23"></p>
+<p>Если P1P2 разбивается  левым ребром окна, то получается два новых отрезка, P'1P2 и  P'1P2. Ключом к алгоритму Сазерленда-Коэна является  информация о том, что одна из концевых точек лежит вне окна. Поэтому тот отрезок,  который заключен между этой точкой и точкой пересечения, можно отвергнуть как  невидимый. Фактически это означает замену исходной концевой точки на точку  пересечения.<br>
+  Кроме описанного, достаточно  известен алгоритм, предложенный Спруллом и Сазерлендом для аппаратной  реализации, основанный на двоичном поиске пересечения отрезков и ребер путем  деления отрезка его средней точкой. Программная реализация данного алгоритма  несколько медленнее.</p>
+<h2><a name="_Toc195990535">1.2.Отсечение двумерного отрезка выпуклым окном</a></h2>
+<p>&nbsp;</p>
+<p>В рассмотренных выше алгоритмах  предполагалось, что отсекающее окно является координатно ориентированным  прямоугольником. Однако во многих случаях окно не таково. И в этих случаях  неприменим ни один из ранее описанных алгоритмов. Кирус и Бек предложили  алгоритм отсечения окном произвольной выпуклой формы.<br>
+  Возьмем выпуклую обтекающую  область R, которая может быть любым плоским выпуклым многоугольником.  Внутренняя нормаль n в произвольной точке a, лежащей на границе R,  удовлетворяет условию: n*(b-a)&sup3;0, где b &ndash; любая точка на границе R. Данное выражение  является следствием следующего. Скалярное произведение двух векторов V1  и V2 равно: V1*V2=|V1|*|V2|*cosj, где  j  &ndash; это меньший из двух углов, образованных V1 и V2. Если j=p/2,  то cosj=0  и V1V2=0, т.е. когда скалярное произведение пары векторов  равно нулю, то они перпендикулярны. На рис.24 показана выпуклая область R, т.е.  отсекающее окно.<br>
+  <img width="276" height="231" src="lk12_clip_image008.jpg" alt="LectSCGIm24"></p>
+<p>Там же показаны внешняя nн  и внутренняя nв нормали к границе окна, исходящие из точки a,  лежащей на границе окна. Кроме того, на рисунке показаны еще несколько  векторов, проведенные из точки a в другие точки на границе окна. Угол между и  любым из таких векторов всегда принадлежит интервалу -p/2&le;j&le;p/2. При таких значениях  угла косинус его всегда положителен. Следовательно, положительно и скалярное  произведение этих векторов, как было установлено выше. Угол между внешней  нормалью и любым из подобных векторов равен p-j, а cos(p-j)=-cosj при  этом отрицателен.<br>
+  Параметрическое представление  отрезка P1P2:<br>
+  P(t) = P1+( P2 &ndash; P1)t,  0&le;t&le;1.<br>
+  Если f &ndash; граничная точка выпуклой  области R, а n &ndash; внутренняя нормаль к одной из ограничивающих эту область  плоскостей, то для любой конкретной величины t, т.е. для любой точки отрезка P1P2,  из условия n*[P(t)-f] &lt; 0 следует, что вектор P(t)-f направлен вовне области  R. Из условия n*[P(t)-f] = 0 следует, что P(t)-f принадлежит плоскости, которая  проходит через f и перпендикулярна нормали. Из условия n*[P(t)-f] &gt; 0  следует, что вектор P(t)-f направлен внутрь R, как показано на рис.25.<br>
+  <img width="429" height="227" src="lk12_clip_image010.jpg" alt="LectSCGIm25"></p>
+<p>Из всех этих условий вместе  взятых следует, что бесконечная прямая пересекает замкнутую выпуклую область,  которая в двумерном случае сводится к замкнутому выпуклому многоугольнику ровно  в двух точках.<br>
+  Пусть эти две точки не  принадлежат одной граничной плоскости или ребру. Тогда уравнение n*[P(t)-f] = 0  имеет только одно решение. Если точка f лежит на той граничной плоскости или на  том ребре, для которых n является внутренней нормалью, то точка на отрезке  P(t), которая удовлетворяет последнему уравнению, будет точкой пересечения  этого отрезка с указанной граничной плоскостью.<br>
+  В качестве примера, рассмотрим  частично видимый отрезок от P1(-1, 1) до P2(9, 3),  отсекаемый прямоугольным окном, показанным на рис.26.<br>
+  <img width="429" height="243" src="lk12_clip_image012.jpg" alt="LectSCGIm26"></p>
+<p>Уравнение прямой, несущей P1P2,  имеет вид y = 0.2(x+6), и она пересекает окно в точках (0, 1.2) и (8, 2.8).  Параметрическое описание отрезка P1P2 следующее:<br>
+  P(t)&nbsp; = P1+ (P2 &ndash; P1)t  = (-1 1) + (10 2)t = (10t-1)i + (2t+1)j, &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&le;t&le;1<br>
+  здесь i и j &ndash; единичные векторы, ориентированные вдоль осей  x и y соответственно. Четыре внутренние нормали к сторонам окна равны: левая nл=i,  правая nп=-i, нижняя nн=j, верхняя nв=-j.<br>
+  Выбрав точку f(0, 0) на левой  стороне окна, имеем P(t)-f = (10t-1)i + (2t+1)j, а уравнение nл*[P(t)-f]  = 10t-1 = 0 дает значение t = 1/10 для пересечения отрезка с левой стороной  окна. Подстановка P(1/10) = (-1 1) + (10 2)(1/10) = (-1 1) + (1 0.2) = (0, 1.2)  дает то же самое значение, которое было вычислено выше другим способом.<br>
+  Использование точки f(0, 0) на  нижней стороне окна приводит к уравнению nн*[P(t)-f] = 2t+1 = 0,  решением которого является значение t=-1/2. Оно лежит вне интервала 0&le;t&le;1 и  поэтому отвергается.<br>
+  Выбрав точку f(8, 4) на правой  стороне окна, имеем P(t)-f = (10t-9)i + (2t-3)j, а уравнение nп*[P(t)-f]  = -(10t-9) = 0 дает значение t = 9/10 для пересечения отрезка с выбранной  стороной. Подстановка дает P(9/10) = (-1 1) + (10 2)(9/10) = (-1 1) + (9 1.8) =  (8, 2.8), что совпадает с результатом вычисления другим методом.<br>
+  Использование точки f(8, 4) на  верхней стороне окна дает уравнению nв*[P(t)-f] = -(2t-3) = 0, с  решением t=3.2. Данное значение лежит вне интервала 0&le;t&le;1 и поэтому  отвергается. Видимый участок отрезка отсекаемый прямоугольной областью,  показанной на рис.26, лежит в интервале 1/10&le;t&le;9/10 или от точки (0, 1.2) до  точки (8, 2.8).<br>
+  При переходе непосредственно к реализации  алгоритма отсечения Кируса-Бека, воспользуемся следующими преобразованиями.  Пусть D = P2 &ndash; P1 и w = P1 &ndash; f. Тогда из  равенства n*[P(t)-f] = 0 следует n*[ P1+ (P2 &ndash; P1)t  &ndash; f] = n*(w+D*t) = n*w+n*D*t = 0. Отсюда t=-(n*w)/(n*D). Здесь в n*D нулю может  быть равно только D, но это означает, что отрезок P1P2 вырожден  в точку.</p>
+<h3><a name="_Toc195990536">1.2.1.Определение факта выпуклости многоугольника и  вычисление его внутренних нормалей</a></h3>
+<p>Для работы с алгоритмом  Кируса-Бека прежде всего необходимо убедиться, что окно является выпуклым, а  затем вычислить внутренние нормали к каждой его стороне. Факт выпуклости или  невыпуклости двумерного полигонального окна можно установить путем вычисления  векторных произведений его смежных сторон. Выводы, которые можно сделать из  анализа знаков этих произведений, таковы:</p>
+<ul>
+  <li>все  знаки равны нулю &ndash; многоугольник вырождается в отрезок;</li>
+  <li>есть  как положительные, так и отрицательные знаки &ndash; многоугольник невыпуклый;</li>
+  <li>все  знаки неотрицательные &ndash; многоугольник выпуклый, а внутренние нормали  ориентированы влево от его контура;</li>
+  <li>все  знаки неположительные &ndash; многоугольник выпуклый, а внутренние нормали  ориентированы вправо от его контура.</li>
+</ul>
+<p>Векторные произведения будут  перпендикулярны к плоскости многоугольника. Векторные произведения двух плоских  векторов V1 и V2 равно (Vx1Vy2 &ndash; Vy1Vx2)k,  где k &ndash; единичный вектор, перпендикулярный к плоскости, несущей  векторы-сомножители.<br>
+  Нормаль к стороне многоугольника  можно вычислить, исходя из того, что скалярное произведение пары  перпендикулярных векторов равно нулю.<br>
+  Если nx и ny  &ndash; неизвестные компоненты нормали к известному вектору (Vx,Vy)  стороны многоугольника, то n*V = (nxi+ nyj)*(Vxi+  Vyj) = nxVx + nyVy = 0 и  nxVx = -nyVy.<br>
+  Поскольку интерес представляет  только направление нормали, то можно принять ny=1. Следовательно,  нормаль равна n = -Vy/Vxi+j или n = -Vyi+Vxj.<br>
+  Если вектор стороны  многоугольника образован как разность векторов пары смежных его вершин Vi-1  и Vi и если скалярное произведение нормали и вектора от Vi-1  до Vi+1 положительно, то n &ndash; внутренняя нормаль. В противном случае  n &ndash; внешняя нормаль. В последнем случае внутреннюю нормаль можно получить,  умножив n на -1.<br>
+  Ниже представлена реализация  рассматриваемого алгоритма.</p>
+<p align="left">// алгоритм двумерного отсечения  Кируса-Бека<br>
+  #include &quot;point.h&quot;</p>
+<p align="left">// определение  выпуклости/невыпуклости<br>
+  bool salience(point* f, int  countSide)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; int  signNew, signOld = 0;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; for (  int i = 0; i &lt; countSide; i++ )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  нахождение векторов из вершины f[i]<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point&nbsp;&nbsp;&nbsp; VVp = f[!i? countSide-1: i-1] &ndash; f[i],<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VVn  = f[(i == countSide-1)? 0: i+1] &ndash; f[i];<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  векторное произведение<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; signNew  = VVp&amp;VVn;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // проверка знаков <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if  ( !signOld )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; signOld  = signNew;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else  if ( (signOld &lt; 0 &amp;&amp; signNew  &gt; 0) ||<br>
+  (signOld &gt; 0 &amp;&amp; signNew &lt; 0) )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  false;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; return  ( !signOld )? false: true;<br>
+  }</p>
+<p align="left">// нахождение нормали <br>
+  point normal(point&amp; Vp, point&amp; V,  point&amp; Vn)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // вектора смежных вершин <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  VVp = Vp &ndash; V, VVn = Vn &ndash; V, VnVp = Vp &ndash; Vn;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // нормаль <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  n(-VVn.y, VVn.x);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; //  если нормаль внешняя &ndash; изменить знак<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; return  ( n*VnVp &gt; 0 )? n: n*-1;&nbsp; <br>
+  }</p>
+<p align="left">// нахождение координат  отсечения отрезка P1P2<br>
+  // многоугольником с  координатами вершин f<br>
+  void severance(const point&amp; P1, const  point&amp; P2, point* f,<br>
+  int countSide, double* minT, double* maxT)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; *minT  = *maxT = 0;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; //  если многоугольник невыпуклый &ndash; выйти<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; if ( !salience(f, countSide) )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; point  w;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  D = P2 &ndash; P1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  n;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; int  i;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  t;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; long  Dsc, wsc;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; for (  *minT = i = 0, *maxT = 1; i &lt; countSide; i++ )&nbsp;&nbsp;&nbsp; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; w  = P1 &ndash; f[i];<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; n  = normal( f[!i? (countSide-1): (i-1)], f[i],<br>
+  f[(i==countSide-1)? 0: (i+1)]);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Dsc  = D * n;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; wsc  = w * n;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if  ( !Dsc )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if  ( wsc &lt; 0 )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t  = -(double)wsc/Dsc;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if  ( Dsc &gt; 0 )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if  ( t &gt; 1 )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *minT  = __max(t, *minT);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if  ( t &lt; 0 )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *maxT  = __min(t, *maxT);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }&nbsp; <br>
+  }</p>
+<p>Для успешной компиляции программы  необходимо добавить три inline-метода, для определения арифметических операций  в структуру point, после чего файл point.h будет иметь вид:</p>
+<p align="left">#ifndef _POINT_H_<br>
+  #define _POINT_H_<br>
+  struct point<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; int  x;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; int  y;</p>
+<p align="left">public:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point()  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : x(0), y(0)&nbsp; { }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point(int  x, int y)&nbsp;&nbsp;&nbsp;&nbsp; : x(x), y(y)&nbsp; { }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point(point&amp;  p)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : x(p.x), y(p.y)&nbsp;&nbsp; { }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; int  dx(point&amp; p) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {  return p.x &ndash; x; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; int  dy(point&amp; p)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {  return p.y &ndash; y; }</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; // разность векторов <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  operator-(const point&amp; p) const<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point  p1(x-p.x, y-p.y);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  p1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // скалярное произведение <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; int  operator*(point&amp; p)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  x*p.x + y*p.y;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; //  умножение вектора на число<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  operator*(int a)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point  p(x*a, y*a);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  p;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // векторное произведение <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; int  operator&amp;(point&amp; p)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  x*p.y &ndash; y*p.x;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  };<br>
+  #endif // _POINT_H_</p>
+<p>На рис.27 показан простой  выпуклый многоугольник. В табл.1 приведены результаты всех вычислений.<br>
+  <img width="296" height="215" src="lk12_clip_image014.jpg" alt="LectSCGIm27"></p>
+<p>Функция main в этом случае может  иметь следующий вид:</p>
+<p align="left">void main(void)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  td, tt;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  P1(1,1), P2(11,6);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  f[5] = {point(5,0), point(0,3), point(4,6),<br>
+  &nbsp;  point(8,6), point(8,2)};<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; severance(P1,  P2, f, 5, &amp;td, &amp;tt);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;min  t = %.2f&nbsp; max t = %.2f\n&quot;, td, tt);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; if (  !(tt || td) )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;Многоугольник невыпуклый!&quot;);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  p = P2 &ndash; P1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  x = p.x*td+P1.x, y = p.y*td+P1.y;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;Точки пересечения:\n&quot;);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;x1  = %.2f&nbsp; y1 = %.2f\n&quot;, x, y);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; x =  p.x*tt+P1.x;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; y =  p.y*tt+P1.y;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;x2  = %.2f&nbsp; y2 = %.2f\n&quot;, x, y);<br>
+  }&nbsp;&nbsp;&nbsp; </p>
+<p>Рассмотрим, например, векторное  произведение сторон, смежных вершине V2, и внутреннюю нормаль к  стороне V2V3.<br>
+  Стороны, смежные вершине V2,  равны V2V1 = 5i &ndash; 3j, V2V3 = 4i +  3j. Векторное их произведение равно V2V1#V2V3  = 27k. Это векторное произведение положительно. В табл.1 показано, что  векторные произведения положительны для всех вершин многоугольника. Это  демонстрирует выпуклость многоугольника. Нормаль к вектору стороны V2V3  равна n=-3/4i+j, или, иначе n=-3i+4j. Вектор V3V1 равен  i-6j. Значит, n*V3V1=(-3i+4j)*(i-6j)=-27&lt;0, поэтому n  &ndash; внешняя нормаль. Для преобразования ее к внутренней, необходимо умножить  вектор нормали на -1, в результате чего получится вектор n=3i-4j.<br>
+  Таблица 1</p>
+<div align="center">
+  <table border="1" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="83" valign="top"><br>
+        Вершина </td>
+      <td width="113" valign="top"><p align="center">Векторы</p></td>
+      <td width="227" valign="top"><p align="center">Векторные    произведения</p></td>
+      <td width="95" valign="top"><p align="center">Результат</p></td>
+    </tr>
+    <tr>
+      <td width="83" valign="top"><p align="center">V1</p></td>
+      <td width="113" valign="top"><p align="center">V1V5#V1V2</p></td>
+      <td width="227" valign="top"><p align="center">[3    2]#[-5 3]</p></td>
+      <td width="95" valign="top"><p align="center">19</p></td>
+    </tr>
+    <tr>
+      <td width="83" valign="top"><p align="center">V2</p></td>
+      <td width="113" valign="top"><p align="center">V2V1#V2V3</p></td>
+      <td width="227" valign="top"><p align="center">[5    -3]#[4 3]</p></td>
+      <td width="95" valign="top"><p align="center">27</p></td>
+    </tr>
+    <tr>
+      <td width="83" valign="top"><p align="center">V3</p></td>
+      <td width="113" valign="top"><p align="center">V3V2#V3V4</p></td>
+      <td width="227" valign="top"><p align="center">[-4    -3]#[4 0]</p></td>
+      <td width="95" valign="top"><p align="center">12</p></td>
+    </tr>
+    <tr>
+      <td width="83" valign="top"><p align="center">V4</p></td>
+      <td width="113" valign="top"><p align="center">V4V3#V4V5</p></td>
+      <td width="227" valign="top"><p align="center">[-4    0]#[0 -4]</p></td>
+      <td width="95" valign="top"><p align="center">16</p></td>
+    </tr>
+    <tr>
+      <td width="83" valign="top"><p align="center">V5</p></td>
+      <td width="113" valign="top"><p align="center">V5V4#V5V1</p></td>
+      <td width="227" valign="top"><p align="center">[0    4]#[-3 -2]</p></td>
+      <td width="95" valign="top"><p align="center">12</p></td>
+    </tr>
+  </table>
+</div>
+<p>Анализ результатов показывает,  что значения нижнего и верхнего пределов параметра t для данной задачи равны,  соответственно 0.13 и 0.70. Исходя из этого, отрезок видим от точки (2.27,  1.64) до точки (8, 4.5).<br>
+  Во многих алгоритмах требуется,  чтобы полигональные отсекающие области были выпуклыми. Одним из примеров таких  алгоритмов является алгоритм Кируса-Бека. Простая реализация поворотов и  переносов отсекающего окна, позволяет разбивать и разделять невыпуклый  многоугольник на несколько выпуклых. Если вершины многоугольника перечисляются  против часовой стрелки, то процедура будет иметь следующий вид:</p>
+<ul>
+  <li>для  каждой i-й вершины многоугольника необходимо перенести его так, чтобы она  совпадала с началом координат;</li>
+  <li>повернуть  многоугольник так, чтобы (i+1)-я его вершина оказалась на положительной полуоси  x;</li>
+  <li>если  знак ординаты (i+2)-й вершины неотрицателен, то многоугольник выпуклый в  (i+1)-й вершине, если этот знак отрицателен, то многоугольник невыпуклый и  разрезается вдоль положительной полуоси x. Образуется два новых многоугольника:  один состоит из вершин исходной фигуры, начиная с (i+1)-й и кончая упомянутой точкой  пересечения (он целиком ниже оси x), а другой образован этой точкой пересечения  и всеми вершинами исходной фигуры, не вошедшими в состав первого  прямоугольника.</li>
+</ul>
+<p>Алгоритм рекурсивно применяется к  полученным многоугольникам до тех пор, пока все они не станут выпуклыми.</p>
+<p>&nbsp;</p>
+<h2><a name="_Toc195990537">1.3.Трехмерное отсечение</a></h2>
+<p>&nbsp;</p>
+<p>В трехмерном варианте алгоритма  Кируса-Бека отсекатель может быть произвольным выпуклым объемом. При этом  сохраняется работоспособность двумерной версии алгоритма. Однако теперь все  векторы имеют по три компоненты x, y, z. Оценка числа операций в алгоритме  Кируса-Бека растет линейно с ростом числа сторон или граней у отсекателя.<br>
+  Для определения выпуклости  трехмерного многогранника и вычисления его внутренних нормалей используется  алгоритм, основанный на поворотах и переносах. Этот алгоритм включает для  каждой грани тела выполнение следующего:</p>
+<ul>
+  <li>перенос  тела таким образом, чтобы одна из вершин грани оказалась в начале координат;</li>
+  <li>поворот  тела относительно начала координат таким образом, чтобы одна из двух смежных выбранной  вершине сторон грани совпадала с одной из осей координат, например с осью x;</li>
+  <li>поворот  тела вокруг выбранной оси координат таким образом, чтобы выбранная грань легла  на координатную плоскость, например, на плоскость z=0;</li>
+  <li>для  всех вершин тела, не принадлежащих выбранной грани, проверить знаки координаты,  которая перпендикулярна этой грани, здесь это будет координата z;</li>
+  <li>если  эти знаки для всех вершин совпадают или равны нулю, то тело будет выпуклым  относительно выбранной грани. Если тело выпукло относительно всех своих граней,  то оно считается выпуклым, &ndash; в противном случае тело невыпукло.</li>
+  <li>если  для всех вершин значения координаты, перпендикулярной выбранной грани, равны  нулю, то тело вырождено, т.е. оно плоское.</li>
+</ul>
+<p>Вектор внутренней нормали к  выбранной плоскости, заданный в повернутой системе координат, имеет все нулевые  компоненты, кроме той, которая перпендикулярна этой плоскости. Знак этой  компоненты для выпуклой грани будет совпадать с ранее выбранным знаком.<br>
+  Для определения искомой  ориентации внутренней нормали в исходной системе координат нужно применить к  ней только обратное преобразование поворотов.<br>
+  В качестве частного случая  рассмотрим куб со срезанным углом (см. рис.28).<br>
+  <img width="290" height="223" src="lk12_clip_image016.gif"><br>
+  Грани куба задаются списком его  вершин:<br>
+  правая: (1, -1, 1), (1, -1, -1),  (1, 1, -1), (1, 1, 1)<br>
+  левая: (-1, -1, 1), (-1, -1, -1),  (-1, 1, -1), (-1, 1, 0), (-1, 0, 1)<br>
+  нижняя: (1, -1, 1), (1, -1, -1),  (-1, -1, -1), (-1, -1, 1)<br>
+  верхняя: (1, 1, 1), (1, 1, -1),  (-1, 1, -1), (-1, 1, 0) , (0, 1, 1)<br>
+  ближняя: (1, -1, 1), (1, 1, 1),  (0, 1, 1), (-1, 0, 1) , (-1, -1, 1)<br>
+  дальняя: (1, -1, -1), (1, 1, -1),  (-1, 1, -1), (-1, -1, -1)<br>
+  косоугольная: (-1, 0, 1), (0, 1,  1), (-1, 1, 0)<br>
+  В табл.2 собраны все результаты  работы алгоритма по отсечению отрезка от P1(-2, 3/2, 1) до P2(3/2,  -1, -1/2) описанным объемом.<br>
+  Из этой таблицы следует, что  максимальным из нижних значений будет tн=1/3, а минимальным из  верхних будет tв=6/7. Поэтому точками отсечения будут P(1/3) = [-5/6  2/3 1/2] на косоугольной грани и P(6/7) = [1 -9/14 -2/7] на правой грани.  Вектор D равен (7/2 -5/2 -3/2). При D*n&lt;0, учитывается верхний предел (tв);  при D*n&gt;0, нижний предел (tн).</p>
+<p align="left">Таблица 2</p>
+<div align="center">
+  <table border="1" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="144" valign="top"><br>
+        Грань </td>
+      <td width="95" valign="top"><p align="center">n</p></td>
+      <td width="94" valign="top"><p align="center">f</p></td>
+      <td width="95" valign="top"><p align="center">w</p></td>
+      <td width="57" valign="top"><p align="center">w*n</p></td>
+      <td width="66" valign="top"><p align="center">D*n</p></td>
+      <td width="59" valign="top"><p align="center">tн</p></td>
+      <td width="38" valign="top"><p align="center">tв</p></td>
+    </tr>
+    <tr>
+      <td width="144" valign="top"><p>Верхняя</p></td>
+      <td width="95" valign="top"><p align="center">(0    -1 0)</p></td>
+      <td width="94" valign="top"><p align="center">(1    1 1)</p></td>
+      <td width="95" valign="top"><p align="center">(-3    1/2 0)</p></td>
+      <td width="57" valign="top"><p align="center">-1/2</p></td>
+      <td width="66" valign="top"><p align="center">5/2</p></td>
+      <td width="59" valign="top"><p align="center">1/5</p></td>
+      <td width="38" valign="top"><p align="center">&nbsp;</p></td>
+    </tr>
+    <tr>
+      <td width="144" valign="top"><p>Нижняя</p></td>
+      <td width="95" valign="top"><p align="center">(0    1 0)</p></td>
+      <td width="94" valign="top"><p align="center">(-1    -1 -1)</p></td>
+      <td width="95" valign="top"><p align="center">(-1    5/2 2)</p></td>
+      <td width="57" valign="top"><p align="center">5/2</p></td>
+      <td width="66" valign="top"><p align="center">-5/2</p></td>
+      <td width="59" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="38" valign="top"><p align="center">1</p></td>
+    </tr>
+    <tr>
+      <td width="144" valign="top"><p>Правая</p></td>
+      <td width="95" valign="top"><p align="center">(-1    0 0)</p></td>
+      <td width="94" valign="top"><p align="center">(1    1 1)</p></td>
+      <td width="95" valign="top"><p align="center">(-3    1/2 0)</p></td>
+      <td width="57" valign="top"><p align="center">3</p></td>
+      <td width="66" valign="top"><p align="center">-7/2</p></td>
+      <td width="59" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="38" valign="top"><p align="center">6/7</p></td>
+    </tr>
+    <tr>
+      <td width="144" valign="top"><p>Левая</p></td>
+      <td width="95" valign="top"><p align="center">(1    0 0)</p></td>
+      <td width="94" valign="top"><p align="center">(-1    -1 -1)</p></td>
+      <td width="95" valign="top"><p align="center">(-1    5/2 2)</p></td>
+      <td width="57" valign="top"><p align="center">-1</p></td>
+      <td width="66" valign="top"><p align="center">7/2</p></td>
+      <td width="59" valign="top"><p align="center">2/7</p></td>
+      <td width="38" valign="top"><p align="center">&nbsp;</p></td>
+    </tr>
+    <tr>
+      <td width="144" valign="top"><p>Ближняя</p></td>
+      <td width="95" valign="top"><p align="center">(0    0 -1)</p></td>
+      <td width="94" valign="top"><p align="center">(1    1 1)</p></td>
+      <td width="95" valign="top"><p align="center">(-3    1/2 0)</p></td>
+      <td width="57" valign="top"><p align="center">0</p></td>
+      <td width="66" valign="top"><p align="center">3/2</p></td>
+      <td width="59" valign="top"><p align="center">0</p></td>
+      <td width="38" valign="top"><p align="center">&nbsp;</p></td>
+    </tr>
+    <tr>
+      <td width="144" valign="top"><p>Дальняя</p></td>
+      <td width="95" valign="top"><p align="center">(0    0 1)</p></td>
+      <td width="94" valign="top"><p align="center">(-1    -1 -1)</p></td>
+      <td width="95" valign="top"><p align="center">(-1    5/2 2)</p></td>
+      <td width="57" valign="top"><p align="center">2</p></td>
+      <td width="66" valign="top"><p align="center">-3/2</p></td>
+      <td width="59" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="38" valign="top"><p align="center">4/3</p></td>
+    </tr>
+    <tr>
+      <td width="144" valign="top"><p>Косоугольная</p></td>
+      <td width="95" valign="top"><p align="center">(1    -1 -1)</p></td>
+      <td width="94" valign="top"><p align="center">(-1    0 1)</p></td>
+      <td width="95" valign="top"><p align="center">(-1    3/2 0)</p></td>
+      <td width="57" valign="top"><p align="center">-5/2</p></td>
+      <td width="66" valign="top"><p align="center">15/2</p></td>
+      <td width="59" valign="top"><p align="center">1/3</p></td>
+      <td width="38" valign="top"><p align="center">&nbsp;</p></td>
+    </tr>
+  </table>
+</div>
+<p>Определим при помощи изложенного  алгоритма факт выпуклости этого отсекателя относительно грани, которая  обозначена как abc. Сначала перенесем это тело так, чтобы точка a совпала с  началом координат. Матрица 4х4 этого преобразования в однородных координатах  такова:</p>
+<div align="center">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="43" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="50" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="50" valign="top"><p align="center">1</p></td>
+      <td width="59" valign="top"><p align="center">0</p></td>
+      <td width="57" valign="top"><p align="center">0</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="43" rowspan="2"><p align="center">[T]</p></td>
+      <td width="50" rowspan="2"><p align="center">=</p></td>
+      <td width="50" valign="top"><p align="center">0</p></td>
+      <td width="59" valign="top"><p align="center">1</p></td>
+      <td width="57" valign="top"><p align="center">0</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="50" valign="top"><p align="center">0</p></td>
+      <td width="59" valign="top"><p align="center">0</p></td>
+      <td width="57" valign="top"><p align="center">1</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="43" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="50" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="50" valign="top"><p align="center">1</p></td>
+      <td width="59" valign="top"><p align="center">0</p></td>
+      <td width="57" valign="top"><p align="center">-1</p></td>
+      <td width="47" valign="top"><p align="center">1</p></td>
+    </tr>
+  </table>
+</div>
+<p>Проекция результата на плоскость  z = 0 показана на рис.29.<br>
+  <img width="175" height="191" src="lk12_clip_image018.jpg" alt="LectSCGIm29"></p>
+<p>Поворот тела вокруг оси z на угол  &phi; = -45? совмещает ребро ab с осью x. Матрица этого преобразования в однородных  координатах имеет вид:</p>
+<div align="center">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="59" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="35" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="56" valign="top"><p align="center">cos    &phi; </p></td>
+      <td width="53" valign="top"><p align="center">sin    &phi;</p></td>
+      <td width="57" valign="top"><p align="center">0</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="59" rowspan="2"><p align="center">[Rz]</p></td>
+      <td width="35" rowspan="2"><p align="center">=</p></td>
+      <td width="56" valign="top"><p align="center">-sin    &phi;</p></td>
+      <td width="53" valign="top"><p align="center">cos    &phi;</p></td>
+      <td width="57" valign="top"><p align="center">0</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="56" valign="top"><p align="center">0</p></td>
+      <td width="53" valign="top"><p align="center">0</p></td>
+      <td width="57" valign="top"><p align="center">1</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="59" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="35" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="56" valign="top"><p align="center">0</p></td>
+      <td width="53" valign="top"><p align="center">0</p></td>
+      <td width="57" valign="top"><p align="center">0</p></td>
+      <td width="47" valign="top"><p align="center">1</p></td>
+    </tr>
+  </table>
+</div>
+<p>Проекция результата этого  преобразования на плоскость z = 0 показана на рис.30.<br>
+  <img width="170" height="201" src="lk12_clip_image020.jpg" alt="LectSCGIm30"></p>
+<p>Остается сделать поворот вокруг  оси x, чтобы совместить плоскость abc с координатной плоскостью y = 0.  Координаты точки c на рис.30 равны (0.707, 0.707, -1). Угол поворота  относительно оси x равен &alpha; = arctg(y/z) = arctg(0.707/(-1)) = -35.264?.<br>
+  Поворот на этот угол поместит  тело под координатной плоскостью y = 0. А поворот на угол &beta; = (180? &ndash; |&alpha;|)  поместит это тело над указанной плоскостью. Последний результат изображен на  рис.31 в проекции на плоскость z = 0. Матрица этого поворота равна:</p>
+<div align="center">
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="55" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="34" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="48" valign="top"><p align="center">1</p></td>
+      <td width="59" valign="top"><p align="center">0</p></td>
+      <td width="57" valign="top"><p align="center">0</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="55" rowspan="2"><p align="center">[Rx]</p></td>
+      <td width="34" rowspan="2"><p align="center">=</p></td>
+      <td width="48" valign="top"><p align="center">0</p></td>
+      <td width="59" valign="top"><p align="center">cos    &beta;</p></td>
+      <td width="57" valign="top"><p align="center">sin    &beta;</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="48" valign="top"><p align="center">0</p></td>
+      <td width="59" valign="top"><p align="center">-sin    &beta;</p></td>
+      <td width="57" valign="top"><p align="center">cos    &beta;</p></td>
+      <td width="47" valign="top"><p align="center">0</p></td>
+    </tr>
+    <tr>
+      <td width="55" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="34" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="48" valign="top"><p align="center">0</p></td>
+      <td width="59" valign="top"><p align="center">0</p></td>
+      <td width="57" valign="top"><p align="center">0</p></td>
+      <td width="47" valign="top"><p align="center">1</p></td>
+    </tr>
+  </table>
+</div>
+<p>Ординаты всех вершин тела, не  лежащие на плоскости y = 0, положительны. Значит, это тело выпукло относительно  грани abc.<br>
+  <img width="181" height="205" src="lk12_clip_image022.gif"><br>
+  Внутренняя нормаль к грани abc,  заданной в результирующем положении, равна n'=(0, sign(y) 0) = (0 1 0). Два  обратных поворота дают n = (0.577 -0.577 -0.577) или n = (1 -1 -1).<br>
+  Для доказательства выпуклости  тела описанную процедуру следует повторить для всех остальных его граней.<br>
+  Трехмерная версия алгоритма  Кируса-Бека работает только с выпуклыми отсекателями. Отсечение невыпуклых тел  реализуется с помощью внутренних и внешних отсечений выпуклыми объемами, из  которых состоит невыпуклое тело. В алгоритме предполагается, что тело  представляет собой многогранник с плоскими гранями. Процедура разрезания  невыпуклого тела на составляющие его выпуклые тела такова:<br>
+  Для каждой полигональной грани  тела</p>
+<ul>
+  <li>перенести  тело, так чтобы одна из вершин выбранной грани совпала с началом координат;</li>
+  <li>повернуть  тело вокруг начала координат так, чтобы одно из инцидентных ему ребер совпало с  одной из осей координат, например с осью x;</li>
+  <li>повернуть  тело вокруг выбранной оси координат так, чтобы выбранная грань совпала с одной  из координатных плоскостей, например с плоскостью z=0;</li>
+  <li>проверить  знаки координаты, которая перпендикулярна выбранной грани (т.е. координаты z),  для всех вершин тела, не лежащих на этой грани;</li>
+  <li>если  все эти знаки совпадают или равны нулю, то тело является выпуклым относительно  этой грани. В противном случае оно невыпукло и его следует разрезать  плоскостью, несущей выбранную грань;</li>
+  <li>повторить  всю процедуру с каждым из вновь образовавшихся тел;</li>
+  <li>продолжать  работу до тех пор, пока все тела не станут выпуклыми.</li>
+</ul>
+<h2><a name="_Toc195990538">1.4.Отсечение многоугольников</a></h2>
+<p>&nbsp;</p>
+<p>При обсуждении отсечения  многоугольников, их можно рассматривать как набор отрезков. В приложениях,  связанных с вычерчиванием контурных изображений, не слишком существенно, если  многоугольник разбит на отрезки до его отсечения. Если замкнутый многоугольник  отсекается как набор отрезков, то исходная фигура может превратиться в один или  более открытых многоугольников или просто стать совокупностью разрозненных  отрезков (см. рис.32).<br>
+  <img width="323" height="199" src="lk12_clip_image024.jpg" alt="LectSCGIm32"></p>
+<p>Однако если многоугольники  рассматриваются как сплошные области, то необходимо, чтобы замкнутость  сохранялась и у результата. Для примера на рис.32 это означает, что отрезки bc,  ef, fg и ha должны быть добавлены к описанию результирующего многоугольника.  Добавление отрезков ef и fg представляет особые трудности. Вопросы возникают и  тогда, когда результат отсечения представляет собой несколько связанных между  собой многоугольников меньших размеров (см. рис.33). Отрезки ab и cd,  показанные на рис.33 не должны быть прорисованы.<br>
+  <img width="337" height="185" src="lk12_clip_image026.jpg" alt="LectSCGIm33"></p>
+<h3><a name="_Toc195990539">1.4.1.Алгоритм Сазерленда-Ходжемена</a></h3>
+<p>Основная идея алгоритма  Сазерленда-Ходжемена состоит в том, что отсечь многоугольник относительно одной  прямой или плоскости достаточно легко. В этом алгоритме исходный&nbsp;&nbsp;  и каждый из промежуточных многоугольников  отсекается последовательно относительно одной прямой. Работа алгоритма для  прямоугольного окна показана на рис.34.<br>
+  <img width="304" height="346" src="lk12_clip_image028.jpg" alt="LectSCGIm34"><br>
+  Исходный многоугольник задается  списком его вершин P1, &hellip; Pn, который порождает список его  ребер P1P2, P2P3, &hellip;, Pn-1Pn,  PnP1. На рисунке показано, что многоугольник сначала  отсекается левой стороной окна, в результате чего получается промежуточная  фигура. Затем этот алгоритм вновь отсекает фигуру верхней стороной окна. Далее  процесс отсечения продолжается с оставшимися сторонами окна. Этот алгоритм  способен отсекать любой многоугольник, выпуклый или невыпуклый, плоский или  неплоский, относительно любого окна, являющегося выпуклым многоугольником.  Порядок отсечения многоугольника разными сторонами окна непринципиален.<br>
+  Результатом работы алгоритма  является список вершин многоугольника, у которого все вершины лежат по видимую  сторону от очередной отсекающей плоскости. Поскольку каждая сторона  многоугольника отсекается независимо от других, то достаточно рассмотреть  только возможные ситуации расположения одного отрезка относительно одной  отсекающей плоскости. При этом каждая точка P из списка вершин многоугольника,  за исключением первой, будет конечной точкой ребра. Начальной точкой ребра S  будет являться вершина, предшествующая P в этом списке. Тогда возможны только  четыре ситуации взаимного расположения ребра и отсекающей плоскости. Они  показаны на рис.35.<br>
+  <img width="481" height="166" src="lk12_clip_image030.jpg" alt="LectSCGIm35"></p>
+<p>Результатом каждого сопоставления  ребра многоугольника с отсекающей плоскостью будет занесение в список вершин  результирующего усеченного многоугольника нуля, одной или двух вершин. Если  рассматриваемое ребро полностью видимо, то результатом будет вершина P.  Заносить в результат начальную вершину S в этом случае не надо, так как если  вершины рассматриваются по порядку, то S уже была конечной точкой предыдущего  ребра и поэтому уже попала в результат. Если же ребро полностью невидимо, то  результат не изменяется.<br>
+  Если ребро многоугольника видимо  не полностью, то оно может или входить или выходить из области видимости  отсекающей плоскости. Если ребро выходит из области видимости, то надо  определить и занести в результат точку пересечения ребра и отсекающей  плоскости. Если же ребро входит в область видимости, то следует поступить точно  так же. Поскольку в последнем случае конечная вершина ребра видима, то она  также должна попасть в результат.<br>
+  Определение видимости точки  эквивалентно определению той стороны границы отсекающей плоскости, по которую  лежит эта точка. Если ребра отсекающего многоугольника обходятся по часовой  стрелке, то его внутренняя область лежит по правую сторону от границы. Для  определения видимости точки ранее был использован метод, заключающийся в  определении знака скалярного произведения вектора нормали на вектор,  начинающийся в произвольной точке на прямой или плоскости и заканчивающийся в  исследуемой точке. Сазерленд и Ходжемен предложили определять видимость точки,  проверяя знак координаты z у векторного произведения двух векторов, лежащих в  одной плоскости. Пусть две точки P1 и P2 лежат на  отсекающей плоскости, а P3 &ndash; это исследуемая точка. Эти три точки  задают некоторую плоскость, на которой лежат два вектора: P1P2 и  P1P3. Если эту плоскость считать плоскостью xy, то у  векторного произведения векторов P1P2 #P1P3  ненулевой будет только компонента z, равная (x3 &ndash; x1)(y2  &ndash; y1) &ndash; (x2 &ndash; x1)(y3 &ndash; y1).  Если знак этой компоненты z будет положительным, нулевым или отрицательным, то  P3 будет лежать соответственно справа, на или слева от прямой P1P2.<br>
+  Пересечение двух параметрически  заданных отрезков, лежащих на одной плоскости, также требует некоторого  уточнения. Два отрезка с концевыми точками P1, P2 и P3,  P4 соответственно можно задать параметрически следующим образом:<br>
+  P(s) = P1 + (P2 &ndash; P1)s,&nbsp;&nbsp;&nbsp;&nbsp; 0&le;s&le;1<br>
+  P(t) = P3 + (P4 &ndash; P3)t,&nbsp;&nbsp;&nbsp;&nbsp; 0&le;t&le;1<br>
+  В точке их пересечения P(s) =  P(t). P(s) и P(t) являются векторно-значными функциями, т.е. P(s) = [x(s),  y(s)], а P(t) = [x(t), y(t)]. Из последнего векторного уравнения получается два  скалярных уравнения с двумя неизвестными s и t, т.е. в точке пересечения x(s) =  x(t) и y(s) = y(t) или:<br>
+  (P2x &ndash; P1x)s &ndash; (P4x &ndash; P3x)t  = P3x &ndash; P1x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&le;s&le;1,&nbsp;&nbsp; 0&le;t&le;1<br>
+  (P2y &ndash; P1y)s &ndash; (P4y &ndash; P3y)t  = P3y &ndash; P1y&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&le;s&le;1,&nbsp;&nbsp; 0&le;t&le;1<br>
+  Если последние уравнения вообще  не имеют решения, то отрезки параллельны. Если же решения есть и они выходят за  область допустимых значений, то отрезки не имеют общих точек. <br>
+  Ниже представлена программа,  реализующая алгоритм Сазерленда-Ходжемена.<br>
+  // алгоритм Сазерленда-Ходжемена  двумерного отсечения многоугольника<br>
+  #include &lt;stdio.h&gt;<br>
+  #include &lt;string.h&gt;<br>
+  #include &lt;vector&gt;<br>
+  #include &lt;algorithm&gt;<br>
+  #include &quot;point.h&quot;</p>
+<p align="left">// пространство имен std  стандартного STL<br>
+  using namespace std;</p>
+<p align="left">void plot(point&amp; p)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;x  = %6.2lf\ty = %6.2lf\n&quot;, p.x, p.y);<br>
+  }</p>
+<p align="left">// определение видимости точки<br>
+  // &lt;0 &ndash; точка невидима<br>
+  // =0 &ndash; точка лежит на P1P2<br>
+  // &gt;0 &ndash; точка видима <br>
+  double visibility(point&amp; p, point&amp; P1,  point&amp; P2)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; return  p.dx(P1)*P2.dy(P1) &ndash; p.dy(P1)*P2.dx(P1);<br>
+  }</p>
+<p align="left">// нахождение обратной матрицы <br>
+  void InverseMatrix2(double matrix[2][2])<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  m[2][2] = { { matrix[0][0], matrix[0][1]},<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {  matrix[1][0], matrix[1][1]}};<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  opred = matrix[0][0] * matrix[1][1] -<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; matrix[0][1]  * matrix[1][0];</p>
+<p align="left">matrix[0][0] = m[1][1] / opred;<br>
+  matrix[0][1] = -m[0][1] / opred;<br>
+  matrix[1][0] = -m[1][0] / opred;<br>
+  matrix[1][1] = m[0][0] / opred;<br>
+  }</p>
+<p align="left">// умножение матрицы на вектор <br>
+  double MulMatrixOnVector2(double matrix[2][2],  double vector[2])<br>
+  {<br>
+  double v[2] = { vector[0], vector[1] };<br>
+  vector[1] =  matrix[1][0]*v[0]+matrix[1][1]*v[1];<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; return  vector[0] = matrix[0][0]*v[0]+matrix[0][1]*v[1];<br>
+  }</p>
+<p align="left">// определение точки пересечения  двух отрезков P1P2 и W1W2<br>
+  point intersection(point&amp; P1, point&amp;  P2, point&amp; W1, point&amp; W2)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  koef[2][2], right[2];</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; //  формирование матрицы коэффициентов уравнений отрезков<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; koef[0][0] = P2.dx(P1);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; koef[0][1]  = W1.dx(W2);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; koef[1][0]  = P2.dy(P1);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; koef[1][1]  = W1.dy(W2);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; //  формирование вектора правых частей уравнений отрезков<br>
+  right[0] = W1.dx(P1);<br>
+  right[1] = W1.dy(P1);</p>
+<p align="left">// обратить матрицу  коэффициентов<br>
+  InverseMatrix2(koef);</p>
+<p align="left">// вычислить точку пересечения  по параметрическому уравнению отрезка<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point pResult = P1 + (P2 &ndash; P1) *  MulMatrixOnVector2(koef, right);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; return  pResult;<br>
+  }</p>
+<p align="left">// определение факта пересечения  двух орезков P1P2 и W1W2<br>
+  bool factIntersection(point&amp; P1, point&amp;  P2, point&amp; W1, point&amp; W2)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double&nbsp;&nbsp; v1 = visibility(P1, W1, W2),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; v2 = visibility(P2, W1, W2);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; return  ( v1 &lt; 0 &amp;&amp; v2 &gt; 0 || v1 &gt; 0 &amp;&amp; v2 &lt; 0 );<br>
+  }</p>
+<p align="left">// нахождение списка вершин  многоугольника, образованных отсекающим окном<br>
+  vector&lt;point&gt; Sazerlend(point*  pPeakPolygon, int countPeakPolygon,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point*  pPeakWindow, int countPeakWindow)<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; vector&lt;point&gt; pointResult,<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointArray(pPeakPolygon,  pPeakPolygon+countPeakPolygon);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; // выполняется для  каждой стороны отсекающего окна <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; for (  int inextWin, iprevWin = 0; iprevWin &lt; countPeakWindow; iprevWin++ )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  номер следующей вершины <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inextWin  = (iprevWin==countPeakWindow-1)? 0: iprevWin+1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  начало тестового вывода <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vector&lt;point&gt;::iterator  iPoint;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(iPoint=pointArray.begin();  iPoint != pointArray.end(); iPoint++)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; plot(*iPoint);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf(&quot;\n\n&quot;);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  конец тестового вывода</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointResult.clear();<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  просмотр всех вершин многоугольника<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(int  inextPol,iprevPol=0;iprevPol&lt;pointArray.size();iprevPol++)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  номер следующей вершины многоугольника<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; inextPol  = (iprevPol==pointArray.size()-1)? 0: iprevPol+1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  установить факт пересеч. ребром многоугольника стороны окна<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( factIntersection(&nbsp; pointArray[iprevPol],<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointArray[inextPol],<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pPeakWindow[iprevWin],<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pPeakWindow[inextWin])  )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; pointResult.push_back(intersection(pointArray[iprevPol],<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointArray[inextPol],<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pPeakWindow[iprevWin],<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pPeakWindow[inextWin]));<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  проверить видимость конечной точки <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if  ( visibility(pointArray[inextPol], pPeakWindow[iprevWin],<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pPeakWindow[inextWin])  &gt;= 0 )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  сохранение конечной точки <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointResult.push_back(pointArray[inextPol]);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  если массив результата пуст &ndash; выход<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if  ( !pointArray.size() )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //  обновить рабочий массив <br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointArray  = pointResult;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // сортировка по  возрастанию координаты x<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; sort(pointArray.begin(),  pointArray.end(), pointD());</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; return  pointArray;<br>
+  }</p>
+<p align="left">void main(void)<br>
+  {&nbsp;&nbsp;&nbsp; // координата вершин многоугольника <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  P3[]&nbsp;&nbsp;&nbsp; = {&nbsp; point(1, -3), point(-3, -3),&nbsp;&nbsp;&nbsp;&nbsp; point(-3, 3),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point(2.5,  3), point(2.5, -1.5),&nbsp; point(1, -1.5),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point(1,  2.5), point(-2.5, 2.5),&nbsp; point(-2.5, 0.5) };<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // координата вершин отсекающего окна <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; point  W[] = {&nbsp; point(-2,  -1), point(-2, 1), point(-1, 2),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point(1,  2),&nbsp; point(2, 1),&nbsp; point(2, -1),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; point(1,  -2), point(-1, -2) };<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // вектор результирующих вершин <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; vector&lt;point&gt;  pArrPoint = Sazerlend(P3, sizeof(P3)/sizeof(point),<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; W,  sizeof(W)/sizeof(point));<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // вывод результата <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; vector&lt;point&gt;::iterator  i;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; for (  i = pArrPoint.begin(); i != pArrPoint.end(); i++ )<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; plot(*i);<br>
+  }<br>
+  Для успешного функционирования  данной программы необходимо использовать структуру pointD с возможностью работы  с нецелочисленными координатами. Описана данная структура в файле PointD.h,  исходный текст которого приведен ниже.<br>
+  #ifndef _POINTD_H_<br>
+  #define _POINTD_H_</p>
+<p align="left">struct pointD<br>
+  {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double&nbsp;&nbsp; x;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double&nbsp;&nbsp; y;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; bool visible;<br>
+  public:<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; pointD()  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : x(0), y(0), visible(true)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; pointD(double  x, double y)&nbsp; : x(x), y(y), visible(true)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; pointD(const  pointD&amp; p)&nbsp;&nbsp;&nbsp;&nbsp; : x(p.x), y(p.y),  visible(true)&nbsp; { }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  dx(pointD&amp; p)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { return p.x &ndash; x;  }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  dy(pointD&amp; p)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { return p.y &ndash; y;  }</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp; // разность векторов <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; pointD  operator-(const pointD&amp; p) const<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointD  p1(x-p.x, y-p.y);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  p1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // сумма векторов <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; pointD  operator+(const pointD&amp; p) const<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointD  p1(x+p.x, y+p.y);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  p1;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // скалярное произведение <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  operator*(pointD&amp; p)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  x*p.x + y*p.y;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // умножение вектора на число <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; pointD  operator*(double a)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pointD  p(x*a, y*a);<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  p;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // векторное произведение <br>
+  &nbsp;&nbsp;&nbsp;&nbsp; double  operator&amp;(pointD&amp; p)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  x*p.y &ndash; y*p.x;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; // сравнение координат для алгоритма sort<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; bool  operator()(pointD p1, pointD p2)<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; {<br>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return  p1.dx(p2)? p1.dx(p2)&gt;0: p1.dy(p2)&gt;0;<br>
+  &nbsp;&nbsp;&nbsp;&nbsp; }<br>
+  };<br>
+  #endif // _POINTD_H_</p>
+<p>Пример, описанный в функции main,  демонстрирует работу алгоритма Сазерленда-Ходжемена. Будет показана также  особенность этого алгоритма: возникновение ложных границ. Во многих приложениях  возникновение ложных границ несущественно, например, при растровой развертке  сплошных областей. Однако в ряде других приложений, например, в некоторых  алгоритмах удаления невидимых поверхностей, требуется устранение таких границ.<br>
+  Координаты вершин многоугольника  и отсекающего окна приведены в табл.3. На рис.36 механизм отсечения  продемонстрирован графически.</p>
+<p>&nbsp;</p>
+<p>Таблица 3</p>
+<div align="center">
+  <table border="1" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="176" valign="top"><br>
+        Вершины    многоугольника </td>
+      <td width="80" valign="top"><p align="center">Коорд.</p></td>
+      <td width="85" valign="top"><p align="center">Вершины    окна</p></td>
+      <td width="66" valign="top"><p align="center">Коорд.</p></td>
+      <td width="142" valign="top"><p align="center">Вершины    результирующего многоугольника</p></td>
+      <td width="85" valign="top"><p align="center">Коорд.</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P1</p></td>
+      <td width="80" valign="top"><p align="right">(1,    -3)</p></td>
+      <td width="85" valign="top"><p>W1</p></td>
+      <td width="66" valign="top"><p align="right">(-2,    -1)</p></td>
+      <td width="142" valign="top"><p>P1</p></td>
+      <td width="85" valign="top"><p align="right">(0,    -2)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P2</p></td>
+      <td width="80" valign="top"><p align="right">(-3,    -3)</p></td>
+      <td width="85" valign="top"><p>W2</p></td>
+      <td width="66" valign="top"><p align="right">(-2,    1)</p></td>
+      <td width="142" valign="top"><p>P2</p></td>
+      <td width="85" valign="top"><p align="right">(-1,    -2)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P3</p></td>
+      <td width="80" valign="top"><p align="right">(-3,    3)</p></td>
+      <td width="85" valign="top"><p>W3</p></td>
+      <td width="66" valign="top"><p align="right">(-1,    2)</p></td>
+      <td width="142" valign="top"><p>P2'</p></td>
+      <td width="85" valign="top"><p align="right">(-2,    -1)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P4</p></td>
+      <td width="80" valign="top"><p align="right">(2.5,    3)</p></td>
+      <td width="85" valign="top"><p>W4</p></td>
+      <td width="66" valign="top"><p align="right">(1,    2)</p></td>
+      <td width="142" valign="top"><p>P3</p></td>
+      <td width="85" valign="top"><p align="right">(-1,    2)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P5</p></td>
+      <td width="80" valign="top"><p align="right">(2.5,    -1.5)</p></td>
+      <td width="85" valign="top"><p>W5</p></td>
+      <td width="66" valign="top"><p align="right">(2,    1)</p></td>
+      <td width="142" valign="top"><p>P4</p></td>
+      <td width="85" valign="top"><p align="right">(2,    1)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P6</p></td>
+      <td width="80" valign="top"><p align="right">(1,    -1.5)</p></td>
+      <td width="85" valign="top"><p>W6</p></td>
+      <td width="66" valign="top"><p align="right">(2,    -1)</p></td>
+      <td width="142" valign="top"><p>P5</p></td>
+      <td width="85" valign="top"><p align="right">(2,    -1)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P7</p></td>
+      <td width="80" valign="top"><p align="right">(1,    2.5)</p></td>
+      <td width="85" valign="top"><p>W7</p></td>
+      <td width="66" valign="top"><p align="right">(1,    -2)</p></td>
+      <td width="142" valign="top"><p>P5'</p></td>
+      <td width="85" valign="top"><p align="right">(1.5,    -1.5)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P8</p></td>
+      <td width="80" valign="top"><p align="right">(-2.5,    2.5)</p></td>
+      <td width="85" valign="top"><p>W8</p></td>
+      <td width="66" valign="top"><p align="right">(-1,    -2)</p></td>
+      <td width="142" valign="top"><p>P6</p></td>
+      <td width="85" valign="top"><p align="right">(1,    -1.5)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>P9</p></td>
+      <td width="80" valign="top"><p align="right">(-2.5,    0.5)</p></td>
+      <td width="85" valign="top"><p>&nbsp;</p></td>
+      <td width="66" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="142" valign="top"><p>P7</p></td>
+      <td width="85" valign="top"><p align="right">(1,    2)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>&nbsp;</p></td>
+      <td width="80" valign="top"><p align="right">&nbsp;</p></td>
+      <td width="85" valign="top"><p>&nbsp;</p></td>
+      <td width="66" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="142" valign="top"><p>P8</p></td>
+      <td width="85" valign="top"><p align="right">(-2,    1)</p></td>
+    </tr>
+    <tr>
+      <td width="176" valign="top"><p>&nbsp;</p></td>
+      <td width="80" valign="top"><p align="right">&nbsp;</p></td>
+      <td width="85" valign="top"><p>&nbsp;</p></td>
+      <td width="66" valign="top"><p align="center">&nbsp;</p></td>
+      <td width="142" valign="top"><p>P9</p></td>
+      <td width="85" valign="top"><p align="right">(-2,    0)</p></td>
+    </tr>
+  </table>
+</div>
+<p align="center"><img width="520" height="495" src="lk12_clip_image032.gif"></p>
+<p>В качестве частного примера  рассмотрим отсечение ребра многоугольника между вершинами P1 и P2  левым краем окна, т.е. стороной W1W2. При обходе  краев окна по часовой стрелке внутренние или видимые их стороны остаются  справа. Используя описанный выше метод определения видимости точек, основанный  на вычислении векторного произведения, имеем для вершины P1: z1  = (xP1-xW1)*(yW2-yW1) &ndash; (yP1-yW1)*(xW2-xW1)=(1+2)(1+1)-(-3+1)(-2+2)=  =6 &gt; 0; и для вершины P1: z1 = (xP1-xW1)*(yW2-yW1)  &ndash; (yP1-yW1)*(xW2-xW1)=(-3+2)(1+1)-(-3+1)(-2+2)=-2  &lt; 0. Отсюда следует, что точка P1 видима, а точка P2 невидима,  поэтому ребро многоугольника пересекает отсекающую плоскость. Воспользовавшись  методом параметрического задания отрезка, получаем точку пересечения (-2, -3).  В конечном варианте, в верхнем углу отсекающего окна на рис.36 показаны две ложные  точки (P3 и P8), полученные для результирующего  многоугольника.<br>
+  Рассмотренная версия алгоритма  Сазерленда-Ходжемена предназначена для отсечения по двумерному окну. Однако  этот алгоритм фактически обладает большей общностью. Любой плоский или  неплоский многоугольник можно отсечь по выпуклому объему путем вычисления&nbsp; его пересечений с трехмерными отсекающими  плоскостями при помощи алгоритма Кируса-Бека.<br>
+  Для использования вышеизложенного  алгоритма отсечения требуются выпуклые отсекающие области. Однако во многих  приложениях, например, при удалении невидимых поверхностей, необходимо отсекать  и по невыпуклым областям. Этой потребности отвечает более мощный, но и более  сложный алгоритм, предложенный Вейлером и Азертоном.<br>
+  Данный алгоритм позволяет  производить отсечение невыпуклого многоугольника с внутренними отверстиями по  другому невыпуклому многоугольнику, который также имеет внутренние отверстия.  Новые границы, образуемые в результате отсечения обрабатываемого многоугольника  отсекающим, совпадают с участками границ отсекателя. Никаких иных новых границ  не возникает. Следовательно, число многоугольников в результате минимально.</p>
+<p><strong>1.4.2.Алогоритм Вейлера-Азертона</strong><br>
+  Как обрабатываемый, так и  отсекающий многоугольники описываются в алгоритме циклическими списками их  вершин. Внешняя граница каждого из этих многоугольников обходится по часовой  стрелке, а внутренние границы или отверстия &ndash; против часовой стрелки. Это  условие означает, что при обходе вершин многоугольника в порядке их следования  в соответствующем списке внутренняя его область будет расположена справа от  границы. Границы обрабатываемого и отсекающего многоугольников могут  пересекаться или не пересекаться между собой. Если они пересекаются, то точки  пересечения образуют пары. Одно пересечение из пары возникает, когда ребро  обрабатываемого многоугольника входит внутрь отсекающего многоугольника, а  другое &ndash; когда оно выходит оттуда. Основная идея заключается в том, что  алгоритм начинает с точки пересечения входного типа, затем он прослеживает  внешнюю границу по часовой стрелке до тех пор, пока не обнаружится еще одно  пересечение с отсекающим многоугольником.<br>
+  В точке последнего пересечения  производится поворот направо и далее прослеживается внешняя граница отсекателя  по часовой стрелке до тех пор, пока не обнаружится ее пересечение с  обрабатываемым многоугольником. И вновь в точке последнего пересечения  производится поворот направо и далее прослеживается граница обрабатываемого  многоугольника. Этот процесс продолжается до тех пор, пока не встретится  начальная вершина. Внутренние границы обрабатываемого многоугольника обходятся  против часовой стрелки.<br>
+  Для корректности работы алгоритма  Вейлера-Азертона необходимо аккуратно классифицировать и вычислять пересечения.  Касания, т.е. ситуации, при которых вершина или ребро обрабатываемого  многоугольника инцидентна или совпадает со стороной отсекателя, не считаются  пересечениями.</p>
+</body>
+</html>

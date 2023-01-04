@@ -1,0 +1,290 @@
+<!-- (C) 2016 Хаджинова Н.В., каф. ИТАС, БГУИР -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//RU">
+<HTML>
+<HEAD>
+<LINK rel=stylesheet href="Оболочка/css/style.css" type=text/css>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1251">
+<META HTTP-EQUIV="Content-Language" CONTENT="ru">
+<title>Лекция № 22 &quot;Система трехмерной компьютерной графики 3ds Max. Материалы. Анимация.&quot;</title>
+</head>
+
+<body>
+<div align="center">
+  <h1>Лекция № 22 &quot;<strong>Система трехмерной компьютерной графики 3ds Max</strong>. Сложные трехмерные объекты. Модификаторы.&quot; </h1>
+</div>
+<hr>
+<h2>Темы, рассматриваемые в данной лекции: </h2>
+<ol>
+  <li>Моделирование сложных трехмерных объектов: полигональное, каркасное моделирование, выдавливание полигонов, сглаживание, NURBS-моделирование, вычитание и сложение трехмерных объектов</li>
+  <li>Модификаторы.<hr>
+  </li>
+</ol>
+<h3 align="left">4.3&nbsp; Модификаторы</h3>
+<p>Модификатор&nbsp;&ndash;  операция, применяемая к объекту. К объекту можно применить несколько  модификаторов. Всегда есть возможность изменить их порядок, а также отменить  некоторые модификаторы.<br>
+  <strong>Пример</strong> &ndash; Рассмотрим применение нескольких простых  модификаторов, позволяющих сужать, растягивать, а также скручивать объект.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить  объект <strong>Box</strong> (любым способом). Выделить  его. В командной панели перейти на вкладку <strong>Modify</strong>, а на ней - в область <strong>Parameters</strong> (если она свернута, развернуть ее щелчком по знаку  &laquo;плюс&raquo;). Ввести параметры объекта: <strong>Length</strong><strong> </strong><strong>Segs</strong> = 1, <strong>Width</strong><strong> </strong><strong>Segs</strong> = 1, <strong>Height&nbsp;Segs</strong> = 10 (это означает, что  параллелепипед будет состоять из десяти сегментов, расположенных &laquo;в высоту&raquo;).  Объект должен иметь примерно такой вид, как показано на рисунке 4.4 (показаны  вид слева и перспектива).</p>
+<p><br>
+  <img src="lk22_clip_image002.jpg" alt="" width="642" height="223"><br>
+  <strong>Рисунок 4.4 &ndash; О</strong><strong>бъект </strong><strong>Box</strong><strong>, состоящий из десяти сегментов</strong></p>
+<p><br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Изменить  построенный объект так, чтобы он был расширен сверху и снизу, а в середине &ndash;  сужен. Для этого выделить объект и в командной панели выбрать вкладку <strong>Modify</strong>. Из списка модификаторов <strong>Modifier List</strong> выбрать желаемый  модификатор, в данном случае &ndash; модификатор <strong>Stretch</strong>.  Установить параметр выполняемой операции: <strong>Stretch</strong> = 0,2. Убедиться, что установлено выполнение операции относительно оси Z: <strong>Stretch</strong><strong> </strong><strong>Axis</strong><strong> = </strong><strong>Z</strong>. В результате объект  должен приобрести примерно такой вид, как показано на рисунке 4.5.<br>
+  <img src="lk22_clip_image004.jpg" alt="" width="642" height="226"><br>
+  <strong>Рисунок 4.5 &ndash; О</strong><strong>бъект </strong><strong>Box</strong><strong> после применения  модификатора Stretch</strong></p>
+<p>Примечание &ndash; Если  бы в качестве параметра <strong>Stretch</strong> было указано отрицательное число, то объект был бы,  наоборот, расширен.<br>
+<strong>3</strong>&nbsp;&nbsp;&nbsp; Снова  выделить объект и аналогичным образом применить к нему модификатор <strong>Twist</strong>. Установить параметр  выполняемой операции: <strong>Angle</strong> = 25 (скручивание на 25&deg;). Убедиться, что  установлено <strong>Twist</strong><strong> </strong><strong>Axis</strong><strong> = </strong><strong>Z</strong>. В результате объект  должен приобрести примерно такой вид, как показано на рисунке 4.6.</p>
+<p><br>
+  <img src="lk22_clip_image002_0000.jpg" alt="" width="642" height="239"><br>
+  <strong>Рисунок 4.6 &ndash; О</strong><strong>бъект </strong><strong>Box</strong><strong> после применения  модификаторов Stretch и </strong><strong>Twist</strong><strong> </strong></p>
+<p><br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Снова  выделить объект. Убедиться, что в командной панели (на вкладке <strong>Modify</strong>) отображается перечень  модификаторов, применённых к объекту, называемый <em>стеком</em> модификаторов  (см. рисунок 4.7). В данном примере стек содержит два модификатора &ndash; <strong>Stretch</strong> и <strong>Twist</strong>. Выполнить операции с ними: временная отмена  (щелчком по отметке в виде лампы), восстановление (повторным щелчком по этой  отметке), а также изменение порядка модификаторов (путем их перемещения в стеке  с помощью мыши). Убедиться, что вид объекта изменяется в соответствии с  используемыми модификаторами.</p>
+<p align="center"><img src="lk22_clip_image004_0000.jpg" alt="" width="181" height="158"><br>
+  <strong>Рисунок 4.7 &ndash;</strong> <strong>Стек модификаторов</strong><br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Поочередно  удалить оба модификатора, щелкая по их отметкам в стеке правой кнопкой мыши и  выбирая команду <strong>Delete</strong>. Убедиться,  что объект приобретает исходный вид (см. рисунок 4.4).<br>
+  Если в  стеке модификаторов рядом с обозначением модификатора имеется знак &laquo;+&raquo;, значит,  можно перейти на уровень <em>подобъектов</em>. Для этого требуется щелкнуть по  отметке &laquo;+&raquo;. Использование подобъектов рассмотрим на следующем примере.<br>
+  <strong>Пример</strong> &ndash; Рассмотрим применение модификатора,  позволяющего придавать объекту произвольную форму.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Выделить  объект <strong>B</strong><strong>o</strong><strong>x</strong> (см. рисунок 4.4). Перейти  на вкладку <strong>Modify</strong>. Из списка  модификаторов <strong>Modifier List</strong> выбрать модификатор <strong>FFD Box </strong>(свободная деформация  объекта). Убедиться, что стек модификаторов имеет такой вид, как показано на  рисунке 4.8а).<br>
+<strong>2</strong>&nbsp;&nbsp;&nbsp; В стеке  модификаторов перейти на уровень подобъектов, щелкнув по отметке в виде знака  &laquo;+&raquo;. Стек модификаторов приобретает такой вид, как показано на рисунке 4.8б). Выбрать  подобъект <strong>Control Points</strong> (контрольные точки).</p>
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td width="328" valign="top"><br>
+      <img src="lk22_clip_image006.jpg" alt="" width="181" height="158"></td>
+    <td width="328" valign="top"><p align="center"><img src="lk22_clip_image008.jpg" alt="" width="180" height="156"></p></td>
+  </tr>
+  <tr>
+    <td width="328" valign="top"><p align="center"><strong>а)</strong></p></td>
+    <td width="328" valign="top"><p align="center"><strong>б)</strong></p></td>
+  </tr>
+</table>
+<p align="center"><strong>Рисунок 4.8 &ndash;</strong> <strong>Стек модификаторов после применения модификатора </strong><strong>FFD</strong><strong>&nbsp;</strong><strong>Box</strong><strong>: а) исходный вид; б)  список подобъектов</strong> </p>
+<p align="center"><br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Изменить  форму объекта желаемым образом, перемещая контрольные точки с помощью инструмента <strong>Select &amp; Move</strong>.<br>
+  Примечание &ndash; Количество  контрольных точек, используемых в модификаторе FFD Box, можно изменять. Для этого в командной  панели щелкнуть кнопку <strong>Set Number of  Points</strong> и указать желаемое количество контрольных точек по осям X, Y, Z. Чем  больше будет установлено контрольных точек, тем больше возможностей для  произвольной деформации объекта.<br>
+  Кроме  контрольных точек, в качестве подобъектов могут использоваться ребра объекта,  фрагменты его поверхности и т.д. Некоторые примеры использования подобъектов  будут рассмотрены далее.</p>
+<h3 align="left">4.4&nbsp; Построение  трёхмерных объектов с помощью сплайнов</h3>
+<p>Сплайн  (Spline)&nbsp;&ndash; плоская фигура. Сплайн может представлять собой стандартную  плоскую фигуру (например, линия, круг, звезда) или иметь произвольную форму. Во  многих случаях сплайны используются как основа для построения сложных трёхмерных  объектов. Трёхмерный объект может строиться, например, путём <em>вращения</em> или <em>перемещения</em> сплайна.</p>
+<h4>4.4.1&nbsp;&nbsp; Построение и редактирование сплайнов</h4>
+<p>Чтобы  построить сплайн, выполнить следующее.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; На  командной панели выбрать вкладку <strong>Create&nbsp;&ndash;  Shapes</strong> и выбрать желаемый сплайн (если требуется плоская фигура  произвольной формы, выбрать <strong>Line</strong>).<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Построить  желаемый сплайн с помощью мыши.<br>
+  Примечание &ndash;  Сплайн-линия <strong>Line</strong> строится щелчками  мыши. Каждый щелчок создаёт опорную точку, в 3ds Max называемую <strong>Vertex</strong>. Для окончания построения линии  щёлкнуть правой кнопкой мыши.<br>
+  Основные  элементы (подобъекты) любого сплайна:</p>
+<ul>
+  <li>опорные точки (<strong>Vertex</strong>);</li>
+  <li>сегменты (<strong>Segment</strong>);</li>
+  <li>сплайн в целом (<strong>Spline</strong>).</li>
+</ul>
+<p>Опорные  точки аналогичны узлам в CorelDRAW (см. раздел 3.4). Они могут быть следующих  типов:</p>
+<ul>
+  <li><strong>Corner</strong> (угловая);</li>
+  <li><strong>Smooth</strong> (гладкая);</li>
+  <li><strong>Bezier</strong> и <strong>Bezier Corner</strong>&nbsp;&ndash;  опорные точки с направляющими для управления их положением (аналогично узлам в CorelDRAW).</li>
+</ul>
+<p>Для  редактирования сплайна перейти на вкладку <strong>Modify</strong>,  в стеке модификаторов перейти на уровень подобъектов, выбрать уровень <strong>Vertex</strong>. После этого можно, например,  изменять типы опорных точек, перемещать их и т.д.<br>
+  Для  изменения типа опорной точки щелкнуть по ней правой кнопкой мыши и выбрать  нужный тип из появившегося меню<br>
+  Для  перемещения опорных точек использовать инструмент <strong>Select and Move</strong>.<br>
+  Основное  средство редактирования сплайнов&nbsp;&ndash; модификатор <strong>Edit Spline</strong>. Чтобы воспользоваться этим модификатором, требуется  выбрать сплайн, выбрать модификатор <strong>Edit  Spline</strong>, перейти на уровень подобъектов и выбрать желаемую команду. <br>
+  Рассмотрим,  например, установку новой опорной точки (<strong>Vertex</strong>).  Для этого выполнить следующее.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Выбрать  сплайн, применить к нему модификатор <strong>Edit  Spline</strong>, перейти на уровень подобъектов &ndash; опорных точек (<strong>Vertex</strong>).<br>
+  <strong>2</strong>&nbsp; В командной панели выбрать тип опорной точки.<br>
+  <strong>3</strong>&nbsp; Выбрать команду <strong>Insert</strong>.<br>
+  <strong>4</strong>&nbsp; С помощью появившегося инструмента щёлкнуть в желаемой точке сплайна.<br>
+  <strong>5</strong>&nbsp; Установить созданную опорную точку в желаемое положение.<br>
+  <strong>6</strong>&nbsp; Для окончания щёлкнуть правой кнопкой.<br>
+  Некоторые  другие команды модификатора <strong>Edit Spline</strong>:</p>
+<ul>
+  <li><strong>Refine</strong>&nbsp;&ndash; установка новой опорной точки на сплайне аналогично команде <strong>Insert</strong>, но без перемещения.</li>
+  <li><strong>Detach</strong>&nbsp;&ndash; отделение части сплайна;</li>
+  <li><strong>Delete</strong>&nbsp;&ndash; удаление выделенной части сплайна;</li>
+  <li><strong>Chamfer</strong> и <strong>Filler</strong>&nbsp;&ndash; придание  углам в опорных точках правильной формы;</li>
+  <li><strong>Mirror</strong>&nbsp;&ndash; зеркальная копия сплайна.</li>
+</ul>
+<h4 align="left">4.4.2&nbsp;&nbsp; Построение  трёхмерных объектов путём вращения сплайнов.<br>
+  Модификатор Lathe</h4>
+<p>Для  использования этого модификатора требуется построить сплайн, имеющий форму <em>поперечного  сечения половины</em> желаемого объекта. Сплайн должен быть незамкнутым. Сплайн может  иметь опорные точки любого вида, но две крайние опорные точки должны иметь тип <strong>Corner</strong>.<br>
+  <strong>Пример</strong> &ndash; Пусть требуется построить  объёмную фигуру, показанную на рисунке 4.9.</p>
+<p><img src="lk22_clip_image010.jpg" alt="" width="580" height="308"><br>
+  <strong>Рисунок 4.9 &ndash;</strong> <strong>Командная панель при использовании модификатора Stretch</strong></p>
+<p><br>
+  Для  этого выполнить следующее.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить  сплайн (типа <strong>Line</strong>), показанный на  рисунке 4.10.<br>
+  <img src="lk22_clip_image012.jpg" alt="" width="124" height="117"><br>
+  <strong>Рисунок 4.10 &ndash;</strong><strong> Пример сплайна</strong><br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Применить  к нему модификатор <strong>Lathe</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; В  командной панели выбрать параметры модификатора <strong>Lathe</strong>, чтобы получить фигуру, аналогичную показанной на рисунке 4.9.  Фигура строится вращением выбранного сплайна. Основные параметры модификатора <strong>Lathe</strong>, которые может потребоваться  установить для решения данной задачи, следующие:</p>
+<ul>
+  <li><strong>X, Y, Z</strong>&nbsp;&ndash; направление оси вращения;</li>
+  <li><strong>Min</strong>, <strong>Max</strong>, <strong>Center</strong>&nbsp;&ndash; расположение оси вращения (<strong>Center</strong>&nbsp;&ndash; ось вращения проходит через центр построенного  сплайна; <strong>Min</strong> и <strong>Max</strong>&nbsp;&ndash; по краям построенного сплайна).</li>
+</ul>
+<p>Для правильного  построения фигуры вращения крайние опорные точки (начало и конец сплайна)  должны иметь тип <strong>Corner</strong>, а также иметь  одинаковую координату по оси <strong>X</strong>. Чтобы  координаты опорных точек были абсолютно одинаковы, удобно ввести эти координаты  (а не выравнивать точки с помощью мыши). Чтобы установить координаты опорной  точки, требуется выделить ее и ввести координату в нижней панели.</p>
+<h4 align="left">4.4.3&nbsp;&nbsp; Построение  трёхмерных объектов путём выдавливания контура сплайна. Модификаторы Extrude,  Bevel, Bevel Profile</h4>
+<p>Модификатор <strong>Extrude</strong> строит трёхмерную фигуру по  форме заданного замкнутого сплайна. Основной параметр этого модификатора &ndash; <strong>Amount</strong> (толщина построенной фигуры).<br>
+  <strong>Пример</strong> &ndash; Построить диск.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить  сплайн <strong>Circle</strong> (т.е. круг).<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Применить  к нему модификатор <strong>Extrude</strong>. Задать параметр <strong>Amount</strong>. Результат см. на рисунке 4.11.</p>
+<p><br>
+  <img src="lk22_clip_image014.jpg" alt="" width="605" height="368"><br>
+  <strong>Рисунок 4.11 &ndash;</strong><strong> Пример использования модификатора </strong><strong>Extrude</strong><strong> </strong></p>
+<p><br>
+  <strong>Пример</strong> &ndash; Построить шестигранную гайку с круглым  отверстием.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Перейти в режим  построения сплайнов (<strong>Create &ndash; Shapes &ndash; Splines</strong>).  Нажать кнопку <strong>NGon</strong> (т.е. выбрать  построение сплайна-шестиугольника).<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Нажать  кнопку <strong>Keyboard Entry</strong>, чтобы  построить выбранную фигуру (шестиугольник) путём указания её параметров (а не с  помощью мыши). Задать параметры сплайна:</p>
+<ul>
+  <li><strong>x = 0, y = 0, z = 0;</strong></li>
+  <li><strong>Radius = 60.</strong></li>
+</ul>
+<p><strong>3</strong>&nbsp;&nbsp;&nbsp; Аналогично,  используя ввод параметров с клавиатуры, построить окружность (сплайн <strong>Circle</strong>) с параметрами:</p>
+<ul>
+  <li><strong>x, y, z = 0;</strong></li>
+  <li><strong>Radius = 40.</strong></li>
+</ul>
+<p>Примечание &ndash; Построение  сплайнов путем ввода параметров с клавиатуры (а не с помощью мыши)  потребовалось, чтобы расположить сплайны относительно друг друга абсолютно  точно, а именно &ndash; чтобы в точности совпадали центры окружности и шестиугольника.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Выделить  шестиугольник и применить к нему модификатор <strong>Extrude</strong>, задав толщину, например, <strong>Amount = 5</strong>.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Выделить  круг и к нему также применить модификатор <strong>Extrude</strong>,  задав параметр <strong>Amount</strong> не меньше, чем  у шестиугольника.<br>
+  <strong>6</strong>&nbsp;&nbsp;&nbsp; Выполнить булеву  операцию вычитания (см. п.&nbsp;4.2.7): из шестигранника вычесть цилиндр. Для  этого выполнить следующее:<br>
+  <strong>а)</strong> перейти на вкладку <strong>Create</strong>. Выбрать из меню <strong>Compound  Objects</strong>;<br>
+  <strong>б)</strong> выделить шестигранник;<br>
+  <strong>в)</strong> нажать кнопку <strong>Boolean</strong>;<br>
+  <strong>г)</strong> установить логическую операцию <strong>Substraction</strong><strong> </strong><strong>A</strong><strong>-</strong><strong>B</strong>;<br>
+  <strong>д)</strong> нажать кнопку <strong>Pick</strong><strong> </strong><strong>Operand</strong><strong> </strong><strong>B</strong> и выбрать  цилиндр. Выполняется вычитание. Результат должен быть аналогичен показанному на  рисунке 4.12.</p>
+<p align="center"><img src="lk22_clip_image016.jpg" alt="" width="605" height="368"><br>
+  <strong>Рисунок 4.12 &ndash;</strong><strong> Построение сложного объекта с помощью <br>
+  модификатора </strong><strong>Extrude</strong><strong> </strong></p>
+<p align="center"><br>
+  Модификатор <strong>Bevel</strong> также строит трёхмерную фигуру  по форме заданного замкнутого сплайна, но позволяет также задавать фаски&nbsp;&ndash;  фигуры из нескольких уровней. Можно устанавливать до трёх уровней фасок, для  каждой задавать высоту (<strong>Height</strong>) и  отступ от границы фигуры (<strong>Outline</strong>).<br>
+<strong>Пример</strong> &ndash; Пусть требуется построить фигуру, показанную на рисунке 4.13.</p>
+<p align="center"><img src="lk22_clip_image018.jpg" alt="" width="605" height="321"><br>
+<strong>Рисунок 4.13 &ndash;</strong><strong> Пример использования модификатора </strong><strong>Bevel</strong></p>
+<p><strong>1</strong>&nbsp;&nbsp;&nbsp; Построить круг радиусом 80.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Применить к нему модификатор Bevel с параметрами:<br>
+  <strong>Level1:</strong><br>
+  <strong>Height:  5;</strong><br>
+  <strong>Outline:  0;</strong><br>
+  <strong>Level2:</strong><br>
+  <strong>Height:  30;</strong><br>
+  <strong>Outline: -30;</strong><br>
+  <strong>Level3:</strong><br>
+  <strong>Height: 60;</strong><br>
+  <strong>Outline: -30.</strong></p>
+<p>Модификатор <strong>Bevel Profile</strong> предназначен для  выдавливания контура заданного сплайна по указанному пути. Путь&nbsp;&ndash; также  сплайн, который может быть как замкнутым, так и незамкнутым. Применение этого  модификатора рассмотрим на следующем примере.<br>
+  <strong>Пример</strong> &ndash; Пусть требуется  построить фигуру, показанную на рисунке 4.14.</p>
+<p><img src="lk22_clip_image020.jpg" alt="" width="605" height="368"><br>
+  <strong>Рисунок 4.14 &ndash;</strong><strong> Пример использования модификатора </strong><strong>Bevel</strong><strong> Profile</strong><br>
+  </p>
+<p><strong>1</strong>&nbsp;&nbsp;&nbsp; Создать два  сплайна: путь и заданный контур (сечение). В данном случае в качестве пути  создадим круг (сплайн <strong>Circle</strong>), а в  качестве сечения&nbsp;&ndash; шестиугольник (сплайн <strong>NGon</strong>).<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Выделить  сплайн-сечение (шестиугольник).<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; Применить  к сечению модификатор <strong>Bevel Profile</strong>.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; В  командной панели нажать кнопку <strong>Pick  Profile</strong> и выбрать путь (круг).</p>
+<h3 align="left">4.5&nbsp; Построение  объёмного текста</h3>
+<p>С  текстом можно выполнять все операции, как с любым другим сплайном. Чтобы построить  текст, выполнить следующее.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Перейти на  вкладку <strong>Create</strong>. Выбрать на ней  вкладку <strong>Shapes</strong>. Нажать кнопку <strong>Text</strong>.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; В  командной панели <strong>Parameters</strong> ввести  текст. Указать параметры текста (шрифт, размер и т.д.).<br>
+  Далее  можно работать с текстом как с обычным сплайном, т.е. перемещать, копировать, применять  модификаторы (например, <strong>Extrude</strong> и <strong>Bevel</strong>), выполнять булевы операции и  т.д.</p>
+<h3 align="left">4.6&nbsp; Построение трёхмерных объектов по заданным  поперечным сечениям. Операция лофтинга</h3>
+<p>Лофтинг&nbsp;&ndash;  построение поверхности по заданным поперечным сечениям, расположенным вдоль  заданного пути. Поверхность (называемая &laquo;лофт&raquo;) строится путём &laquo;натягивания&raquo; на  заданную систему сечений.<br>
+  <strong>Пример</strong> &ndash; Пусть требуется построить изображение трубопровода, построенного в  виде прямоугольного контура (см. рисунок 4.15).</p>
+<p><img src="lk22_clip_image022.jpg" alt="" width="605" height="368"><br>
+  <strong>Рисунок 4.15 &ndash;</strong><strong> Пример операции лофтинга</strong><br>
+  </p>
+<p>Здесь в  качестве сечения будем использовать круг, а в качестве заданного пути &ndash; прямоугольник.  Задача решается в следующем порядке.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить (например,  в окне <strong>Top</strong>) сплайны, используемые в  качестве сечения и пути, в данном случае - круг (сплайн <strong>Circle</strong>) и прямоугольник (сплайн <strong>Rectangle</strong>). Выделить один из них.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Перейти на  вкладку <strong>Create</strong>. Выбрать на ней вкладку <strong>Geometry</strong>. Выбрать из меню в  командной панели элемент <strong>Compound  Objects</strong>. Нажать кнопку&nbsp;<strong>Loft</strong>.<br>
+  3&nbsp;&nbsp;&nbsp; Если на шаге 1 был выбран путь (т.е.  прямоугольник), нажать кнопку <strong>Get Shape</strong> и выбрать сечение (т.е. круг). Если же, наоборот, на шаге 1 было выбрано  сечение (т.е. круг), то нажать кнопку <strong>Get  Path</strong> и выбрать путь (т.е. прямоугольник). Строится поверхность путем  перемещения сечения вдоль заданного пути.</p>
+<p>В  операции лофтинга имеется возможность использовать в одной фигуре несколько  сечений.<br>
+  <strong>Пример</strong> &ndash; Пусть требуется построить изображение вазы с круглым дном и шестиугольным  верхом (см. рисунок 4.17).<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; В окне <strong>Top</strong> построить круг (<strong>Circle</strong>) и шестиугольник (<strong>NGon</strong>). При этом шестиугольник должен  быть больше, чем круг.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; В окне <strong>Front</strong> построить вертикальную прямую  линию (сплайн <strong>Line</strong>). Чтобы линия  получилась в точности прямой, строить ее при нажатой клавише&nbsp;<strong>Shift</strong>.<br>
+<strong>3</strong>&nbsp;&nbsp;&nbsp; Выполнить  операцию лофтинга, как показано в предыдущем примере, используя в качестве пути  линию, а в качестве сечения &ndash; круг. Будет построен вертикальный цилиндр (см.  рисунок 4.16).</p>
+<p align="center"><img src="lk22_clip_image024.jpg" alt="" width="605" height="368"><br>
+  <strong>Рисунок 4.16 &ndash;</strong><strong> Построение простого лофта</strong></p>
+<p><strong>4</strong>&nbsp;&nbsp;&nbsp; Выделить  построенный цилиндр. Перейти на вкладку <strong>Modify</strong>.  Убедиться, что в стеке модификаторов выбран модификатор <strong>Loft</strong>.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; В поле <strong>Path</strong> установить желаемую позицию для  применения нового сечения. По умолчанию она устанавливается в процентах от  длины пути. Установить небольшую величину, например 20%.<br>
+  <strong>6</strong>&nbsp;&nbsp;&nbsp; Нажать  кнопку <strong>Get Shape</strong> и выбрать новое  сечение, в данном случае &ndash; шестиугольник. Построенный лофт изменяется, как  показано на рисунке 4.17.</p>
+<p align="center">&nbsp;</p>
+<p align="center"><img src="lk22_clip_image026.jpg" alt="" width="605" height="368"><br>
+<strong>Рисунок 4.17 &ndash;</strong><strong> Построение лофта с переменным сечением</strong></p>
+<p align="center"><br></p>
+<p>Имеется  также возможность изменять построенный лофт произвольным образом. Для этого  открыть панель <strong>Deformation</strong> и нажать в  ней кнопку <strong>Scale</strong>. Вызывается  редактор <strong>Scale Deformation</strong>. В его  окне имеется линия, соответствующая построенному лофту. На неё можно с помощью  инструмента <strong>Insert Corner Point</strong> наносить новые точки, а затем перемещать их с помощью инструмента <strong>Move Corner Point</strong>, изменяя тем самым  форму лофта.<br>
+  Можно  также изменять тип установленной точки. Для этого щёлкнуть по ней правой кнопкой  и выбрать тип <strong>Corner, Bezier Corner</strong> или <strong>Bezier Smooth</strong>. По окончании  настройки закрыть окно <strong>Scale Deformation</strong>.<br>
+  Имеется  также большой набор дополнительных операций, которые можно выполнять с построенным  лофтом. Например, чтобы у полученного в примере изображения вазы был открытый  верх требуется в панели <strong>Loft</strong> открыть  панель <strong>Skin Parameters</strong>, снять флажок <strong>Cap Start</strong> (или <strong>Cap End</strong>).<br>
+  Для  придания вазе более реального вида, а именно &ndash; придания толщины стенок, следует  применить к построенному лофту модификатор <strong>Shell</strong> и указать желаемую толщину стенок через параметры <strong>Inner Amount</strong> и <strong>Outer Amount</strong>.</p>
+<h3 align="left">4.7&nbsp; Построение  объектов с помощью каркасного моделирования. Модификатор Edit Mesh</h3>
+<p>Модификатор <strong>Edit Mesh</strong> позволяет работать с  объектами на уровне их отдельных компонентов, а именно:</p>
+<ul>
+  <li>вершин (опорных точек, <strong>Vertex</strong>);</li>
+  <li>рёбер (<strong>Edge</strong>);</li>
+  <li>полигонов (<strong>Polygon</strong>);</li>
+  <li>граней (<strong>Face</strong>);</li>
+  <li>элементов (<strong>Element</strong>).</li>
+</ul>
+<p>Общий  порядок работы с модификатором <strong>Edit Mesh</strong> следующий.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Создать  исходный объект, например примитив <strong>Box</strong>.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Применить  к нему модификатор <strong>Edit Mesh</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; В стеке  модификаторов выбрать модификатор <strong>Edit  Mesh</strong>. Перейти на уровень подобъектов и выбрать желаемый уровень.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Выбрать  желаемый компонент, с которым нужно работать. Если требуется выбрать несколько  компонентов, использовать клавишу <strong>Ctrl</strong>.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Выполнить  желаемые операции, например, переместить выбранные компоненты с помощью кнопки <strong>Select and Move</strong>, или воспользоваться  кнопками на вкладке <strong>Edit Geometry</strong>:</p>
+<ul>
+  <li><strong>Create</strong>&nbsp;&ndash; создать;</li>
+  <li><strong>Detach</strong>&nbsp;- отделить;</li>
+  <li><strong>Extrude</strong>&nbsp;&ndash; выполнить  выдавливание;</li>
+  <li><strong>Bevel</strong>&nbsp;&ndash; создание фаски;</li>
+  <li><strong>Chamfer</strong>&nbsp;&ndash; срез вершины или  ребра;</li>
+  <li><strong>Collapse</strong>&nbsp;&ndash; слияние, и многие  другие.</li>
+</ul>
+<p><strong>Пример</strong> &ndash; Пусть требуется построить клин (см. рисунок 4.18).<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить примитив <strong>Box</strong>.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Применить  к нему модификатор <strong>Edit Mesh</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; В стеке  модификаторов перейти на уровень рёбер.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; На одной  из граней прямоугольника с помощью инструмента выделения при нажатой клавише <strong>Ctrl</strong> выбрать два параллельных ребра.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Нажать  кнопку <strong>Collapse</strong>.</p>
+<p><br>
+  <img src="lk22_clip_image028.jpg" alt="" width="605" height="367"><br>
+  <strong>Рисунок 4.18 &ndash;</strong><strong> Пример применения модификатора Edit Mesh</strong><br>
+  </p>
+<p><strong>Пример</strong> &ndash; Построить клин,  сходящийся в одну точку.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить примитив <strong>Box</strong>.<br>
+  <strong>2</strong>&nbsp;&nbsp;&nbsp; Применить  к нему модификатор <strong>Edit Mesh</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; В стеке  модификаторов перейти на уровень <strong>Vertex</strong>.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; На одной  из граней выделить все четыре вершины и нажать кнопку <strong>Collapse</strong>.<br>
+  <strong>Пример</strong> &ndash; Построить изображение  стола на четырёх ножках (см. рисунок&nbsp;4.19).<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить примитив <strong>Box</strong>. При его создании задать  количество сегментов:</p>
+<ul>
+  <li><strong>Length Segs: 5;</strong></li>
+  <li><strong>Width Segs: 7;</strong></li>
+  <li><strong>Height Segs: 1.</strong></li>
+</ul>
+<p><strong>2</strong>&nbsp;&nbsp;&nbsp; Применить  модификатор <strong>Edit Mesh</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; В стеке  модификаторов перейти на уровень <strong>Polygon</strong>.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; C помощью  мыши при нажатой клавише <strong>Ctrl</strong> выбрать четыре сегмента, где должны располагаться ножки стола.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; В  командной панели на вкладке <strong>Edit  Geometry</strong> в поле <strong>Extrude</strong> ввести  длину ножек, например, 40, и нажать кнопку <strong>Extrude</strong>.<br>
+  <strong>6</strong>&nbsp;&nbsp;&nbsp; Чтобы  ножки стола получились суженными снизу, в поле <strong>Bevel</strong> указать величину сужения, например, -3, и нажать кнопку <strong>Bevel</strong>.</p>
+<p><br>
+  <img src="lk22_clip_image030.jpg" alt="" width="605" height="368"><br>
+  <strong>Рисунок 4.19 &ndash;</strong><strong> Пример применения модификатора Edit Mesh с обработкой отдельных  сегментов </strong><br>
+  </p>
+<p>Примечание &ndash; Если  при создании объекта он не был разбит на сегменты, это можно сделать для уже  существующего объекта. Для этого перейти на вкладку <strong>Modify</strong>, выделить объект, в стеке модификаторов выбрать объект в  целом и указать количество сегментов.<br>
+  <strong>Пример</strong> &ndash; Получить фигуру, показанную на рисунке 4.20.<br>
+  <strong>1</strong>&nbsp;&nbsp;&nbsp; Построить примитив <strong>Box</strong> с размерами:</p>
+<ul>
+  <li><strong>Length: 120;</strong></li>
+  <li><strong>Width: 200;</strong></li>
+  <li><strong>Height: 30.</strong></li>
+</ul>
+<p><strong>2</strong>&nbsp;&nbsp;&nbsp; Применить  модификатор <strong>Edit Mesh</strong>.<br>
+  <strong>3</strong>&nbsp;&nbsp;&nbsp; В стеке  модификаторов перейти на уровень <strong>Polygon</strong>.<br>
+  <strong>4</strong>&nbsp;&nbsp;&nbsp; Щелчком  мыши выделить верхнюю (т.е. б<strong><em>о</em></strong>льшую)  поверхность построенной фигуры.<br>
+  <strong>5</strong>&nbsp;&nbsp;&nbsp; Применить  операции:</p>
+<ul>
+  <li><strong>Extrude: 5;</strong></li>
+  <li><strong>Bevel: -10.</strong></li>
+</ul>
+<p><strong>6</strong>&nbsp;&nbsp;&nbsp; В стеке  модификаторов перейти на уровень <strong>Vertex</strong>.<br>
+  <strong>7</strong>&nbsp;&nbsp;&nbsp; Выделить четыре  вершины построенной поверхности и с помощью инструмента <strong>Select</strong> <strong>and Move</strong> и  опустить их вниз на 5 единиц до прежнего уровня.<br>
+  <strong>8</strong>&nbsp;&nbsp;&nbsp; В стеке  модификатор перейти на уровень <strong>Polygon</strong>.<br>
+  <strong>9</strong>&nbsp;&nbsp;&nbsp; Щелчком  мыши выделить полученную поверхность.<br>
+  <strong>10</strong>&nbsp; Применить к  ней операцию <strong>Extrude</strong> с параметром -5.</p>
+<p><br>
+  <img src="lk22_clip_image032.jpg" alt="" width="605" height="368"><br>
+  <strong>Рисунок 4.20 &ndash;</strong><strong> Пример применения модификатора Edit Mesh с обработкой поверхностей </strong></p>
+<p><a href="../../presentations/21-24 лекция 3D'sMAX.ppt" target="_new">Презентация к лекциям 21-24</a></p>
+</body>
+</html>
